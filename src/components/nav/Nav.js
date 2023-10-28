@@ -1,5 +1,6 @@
 import { UseMobileToggler } from "../hooks/paramsSetter";
 import { BiMenuAltRight } from "react-icons/bi";
+import { AiOutlineClose } from "react-icons/ai";
 function Nav() {
   const { mobileView, toggler } = UseMobileToggler();
   return (
@@ -8,11 +9,19 @@ function Nav() {
         <h1 className="text-[23px] text-white relative font-semibold first-letter:text-[#16c0f0] after:absolute after:content-[' '] after:w-[5px] after:h-[5px] after:ml-[3px] after:bg-[#16c0f0] after:bottom-[10px] ">
           Chibuike
         </h1>
-        <BiMenuAltRight
-          onClick={() => toggler("open", true)}
-          size={40}
-          className="text-[#16c0f0] cursor-pointer"
-        />
+        {mobileView == "true" ? (
+          <AiOutlineClose
+            onClick={() => toggler("open", false)}
+            size={40}
+            className="text-[#16c0f0] cursor-pointer"
+          />
+        ) : (
+          <BiMenuAltRight
+            onClick={() => toggler("open", true)}
+            size={40}
+            className="text-[#16c0f0] cursor-pointer"
+          />
+        )}
       </div>
     </nav>
   );

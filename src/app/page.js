@@ -23,11 +23,11 @@ export default function Home() {
   // }, [isIntersecting?.hash]);
 
   return (
-    <main className="relative min-h-screen bg-[#2b3d4f]">
+    <main className="relative bg-[#263446]">
       <Sidebar />
       <Hero isvisible={isIntersecting} setIntersecting={setIntersecting} />
       <Nav />
-      <div className="px-[30px] lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
+      <div className="px-[30px] h- full lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
         <About isvisible={isIntersecting} setIntersecting={setIntersecting} />
         <Services
           isvisible={isIntersecting}
