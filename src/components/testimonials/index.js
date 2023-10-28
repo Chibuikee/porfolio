@@ -34,10 +34,10 @@ function Testimonials() {
           {[1, 2, 3, 4].map((item, key) => (
             <div
               key={key}
-              className="mb-[45px] p-[35px_30px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-full border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]"
+              className="mb-[45px] text-center p-[35px_30px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-full border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]"
             >
-              <div className="relative text-center">
-                <Image src="/chibs.jpg" fill alt="Satisfied clients" />
+              <div className="mx-auto relative h-[50px] w-[50px]">
+                <Image src="/images/img-1.jpeg" fill alt="Satisfied clients" />
               </div>
               <h3>Chibuike Ewenike</h3>
               <h3>Frontend Developer</h3>
