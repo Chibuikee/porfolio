@@ -4,15 +4,15 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 function Testimonials() {
   const indicators = (index) => (
-    <span className="relative indicator flex h-3 w-3 mr-5">
+    <span className="relative active:bg-[red] indicator flex h-3 w-3 mr-5">
       <span
         className={`${
           null
           // section === item.url ? "animate-ping bg-sky-400" : null
-        } absolute animate-ping bg-sky-400 inline-flex h-full w-full rounded-full  opacity-75`}
+        } absolute pingchild inline-flex h-full w-full rounded-full  opacity-75`}
       ></span>
       <span
-        className={`relative inline-flex bg-sky-500 rounded-full h-3 w-3 border border-sky-400 ${
+        className={`relative pingchildsibling inline-flex  rounded-full h-3 w-3 border border-sky-400 ${
           // section === item.url ? "bg-sky-500 " : null
           null
         }`}
