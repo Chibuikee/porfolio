@@ -67,45 +67,20 @@ const Form = () => {
   }
   return (
     <>
-      <section id="Contact" className="py-20">
-        <div className="mt-4 px-4 mx-auto sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1010px] xl:max-w-[1280px]">
+      <section className="basis-[65%] md:w-full py-20 md:py-0">
+        <div className="mb-[45px] p-[20px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-full border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]">
           <div>
             <h1 className="text-center font-medium tracking-wide text-[1.75rem] pb-4">
               GET IN TOUCH
             </h1>
             <div className="w-12 h-[0.125rem] mt-3 mx-auto bg-[#fb3e3e]"></div>
-            <p className="pt-4 text-[#95a0ab] text-sm mb-4 text-center">
-              We thrive when coming up with innovative ideas but also understand
+            <p className="pt-4 text-[#c7c5c7] text-sm mb-4 text-center">
+              I thrive when coming up with innovative ideas but also understand
               that a smart concept should be supported with measurable results.
             </p>
           </div>
           <div className="lg:flex justify-between">
-            <div className="mt-4 pt-4 basis-1/3">
-              <p className="mt-4">
-                <span className="text-[#212529]">Head Office Address</span>
-                <br />
-                <span className=" text-[#95a0ab] mt-2">
-                  119 Awolowo Way, (Suite B49 & 50 De Plaza Ville) Ikeja, Lagos
-                </span>
-              </p>
-              <p className="mt-4">
-                <span className="text-[#212529]">Branch Office</span>
-                <br />
-                <span className="text-[#95a0ab] mt-2">
-                  33A, Abakaliki Road, Suite 39,
-                  <br />
-                  Grand Mall GRA, Enugu.
-                </span>
-              </p>
-              <p className="mt-4">
-                <span className="text-[#212529]">Working Hours:</span>
-                <br />
-                <span className="text-[#95a0ab] mt-2">9:00AM To 6:00PM</span>
-              </p>
-            </div>
-
-            <div className="basis-2/3 px-3 pt-5">
-              {/* <pre> {JSON.stringify(userInfo, undefined, 2)} </pre> */}
+            <div className=" px-3 pt-5">
               <form className="space-y-4" onSubmit={formik.handleSubmit}>
                 <div className="md:flex flex-wrap space-y-4 md:space-y-0 md:gap-[2%] w-full">
                   {formfields.map((item) => (
