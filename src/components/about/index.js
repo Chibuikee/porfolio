@@ -20,13 +20,13 @@ function About({ setIntersecting, isvisible }) {
     <section
       ref={Aboutref}
       id="about"
-      className="pt-[30px] h-screen text-white"
+      className="pt-[30px] h- screen text-white"
     >
       <div className="">
         <div className=" lg:flex">
           <div className="relative basis-[50%] py-[7px]  h-[85vh] shrink-0 min-[992px]:basis-[41.66666667%]">
             <Image
-              className="px-[22px] h-auto"
+              className="md:px-[22px] h-auto"
               src="/images/img-1.jpeg"
               //   src="/images/aboutImg.jpg"
               style={{ objectFit: "cover" }}

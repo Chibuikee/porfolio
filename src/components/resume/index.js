@@ -14,7 +14,7 @@ function Resume({ setIntersecting, isvisible }) {
       type: "Freelance",
       details:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
-      position: "justify-start",
+      position: "justify-center md:justify-start",
     },
     {
       title: "Marketing Strategist",
@@ -22,7 +22,7 @@ function Resume({ setIntersecting, isvisible }) {
       type: "Freelance",
       details:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
-      position: "justify-end",
+      position: "justify-center md:justify-end",
     },
     {
       title: "SEO Developer",
@@ -30,7 +30,7 @@ function Resume({ setIntersecting, isvisible }) {
       type: "Freelance",
       details:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
-      position: "justify-start",
+      position: "justify-center md:justify-start",
     },
     {
       title: "Back End Developer",
@@ -38,7 +38,7 @@ function Resume({ setIntersecting, isvisible }) {
       type: "Freelance",
       details:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
-      position: "justify-end",
+      position: "justify-center md:justify-end",
     },
   ];
   return (
@@ -56,9 +56,9 @@ function Resume({ setIntersecting, isvisible }) {
             {resumeDetails.map((item) => (
               <div
                 key={item.title}
-                className={`dot w-full ${item.position} flex relative`}
+                className={`dot before:top-[-30px] md:before:top-[10px] w-full ${item.position} flex relative`}
               >
-                <div className="mb-[35px] text-[#c7c5c7] w-[47%] border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]">
+                <div className="mb-[45px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-full md:w-[47%] border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]">
                   <h2 className="text-center text-[#16c0f0] py-[15px] font-semibold tracking[.5px] text-base">
                     {item.title}
                   </h2>

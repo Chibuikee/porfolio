@@ -68,7 +68,7 @@
   display: block;
   position: absolute;
   z-index: 9999;
-  top: 10px;
+  /* top: 10px; */
   left: 50%;
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);

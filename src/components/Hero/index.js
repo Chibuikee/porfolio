@@ -47,7 +47,7 @@ function Hero({ setIntersecting, isvisible }) {
     <section
       ref={homeRef}
       id="home"
-      className="Hero w-full z-0 flex h-screen  items- center justify-center bg-[#070303] relative"
+      className="Hero w-full z -0 flex h-screen  items- center justify-center bg-[#070303] relative"
     >
       <Image
         style={{ objectFit: "cover" }}
@@ -57,7 +57,7 @@ function Hero({ setIntersecting, isvisible }) {
         alt="landing hero section"
       />
       <div className="absolute z-[5] left-0 right-0 top-0 bottom-0 bg-[#2b3d4fb2]"></div>
-      <div className=" absolute z-20 left-[40px] w-[20px] -translate-y- 1/2 items-center top-[35%]  flex flex-col gap-3">
+      <div className=" absolute z-20 left-[10px] md:left-[40px] w-[20px] -translate-y- 1/2 items-center top-[35%]  flex flex-col gap-3">
         <h3 className="rotate-[90deg] text-white text-base w-[15ch] shrink-0 m-3">
           FOLLOW <span> ME</span>
         </h3>
@@ -69,7 +69,7 @@ function Hero({ setIntersecting, isvisible }) {
         ))}
       </div>
       <div className="absolute z-10 -translate-x-1/2 -translate-y-1/2 left-[50%] top-[50%] w- full">
-        <h1 className="text-[#ffffff] whitespace-nowrap text-center text-[75px] font-montserrat mt-[60px] mb-[30px] font-bold">
+        <h1 className="text-[#ffffff] whitespace-nowrap text-center text-[35px] md:text-[60px] lg:text-[75px] font-montserrat mt-[60px] mb-[30px] font-bold">
           Chibuike Ewenike
         </h1>
         <p className="text-[red] text-[22px] text-center mb-[50px]">
@@ -91,7 +91,7 @@ function Hero({ setIntersecting, isvisible }) {
             ))}
           </ul>
         </p> */}
-        <div className="flex gap-5 justify-center bg-[transparent] text-white">
+        <div className="flex max-md:flex-col items-center gap-5 justify-center bg-[transparent] text-white">
           <button className="py-3 text-base w-[160px] bg-[#16c0f0] text-white font-medium rounded-[50px] border border-[#16c0f0]">
             Hire me
           </button>
