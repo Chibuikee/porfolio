@@ -100,7 +100,7 @@ function Hero({ setIntersecting, isvisible }) {
           </button>
         </div>
       </div>
-      <div className=" fixed z-50 right-[30px] translate-y-[-50%] top-[50%]  flex flex-col gap-2">
+      <div className=" fixed z-50 right-[30px] translate-y-[-50%] top-[50%] flex flex-col gap-2">
         {navItems.map((item, key) => (
           <React.Fragment key={item.name}>
             <span

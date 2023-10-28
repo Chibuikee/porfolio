@@ -17,10 +17,14 @@ function About({ setIntersecting, isvisible }) {
     { name: "Email", value: "sopewenike@yahoo.com" },
   ];
   return (
-    <section ref={Aboutref} id="about" className="h-screen text-white">
+    <section
+      ref={Aboutref}
+      id="about"
+      className="pt-[30px] h-screen text-white"
+    >
       <div className="">
         <div className=" lg:flex">
-          <div className="relative basis-[50%] py-[7px]  h-screen shrink-0 min-[992px]:basis-[41.66666667%]">
+          <div className="relative basis-[50%] py-[7px]  h-[85vh] shrink-0 min-[992px]:basis-[41.66666667%]">
             <Image
               className="px-[22px] h-auto"
               src="/images/img-1.jpeg"

@@ -4,6 +4,7 @@ import About from "@/components/about";
 import { UseMobileToggler } from "@/components/hooks/paramsSetter";
 import Nav from "@/components/nav/Nav";
 import Resume from "@/components/resume";
+import Services from "@/components/services";
 import Sidebar from "@/components/sidebar";
 import { useEffect, useState } from "react";
 
@@ -24,10 +25,16 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-[#2b3d4f]">
       <Sidebar />
-      <Nav />
       <Hero isvisible={isIntersecting} setIntersecting={setIntersecting} />
-      <Resume isvisible={isIntersecting} setIntersecting={setIntersecting} />
-      <About isvisible={isIntersecting} setIntersecting={setIntersecting} />
+      <Nav />
+      <div className="px-[30px] lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
+        <About isvisible={isIntersecting} setIntersecting={setIntersecting} />
+        <Services
+          isvisible={isIntersecting}
+          setIntersecting={setIntersecting}
+        />
+        <Resume isvisible={isIntersecting} setIntersecting={setIntersecting} />
+      </div>
     </main>
   );
 }
