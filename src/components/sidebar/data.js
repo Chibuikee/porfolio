@@ -25,6 +25,11 @@ export const navItems = [
   },
   {
     icon: ImHome3,
+    name: "Testimonials",
+    url: "testimonials",
+  },
+  {
+    icon: ImHome3,
     name: "Blog",
     url: "blog",
   },
