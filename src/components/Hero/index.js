@@ -7,7 +7,8 @@ import { navItems } from "../sidebar/data";
 import { Tooltip } from "react-tooltip";
 import { UseMobileToggler } from "../hooks/paramsSetter";
 import { usePathname } from "next/navigation";
-import { FaFacebook } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { BsInstagram, BsTwitter, BsTiktok } from "react-icons/bs";
 
 function Hero({ setIntersecting, isvisible }) {
   const pathname = usePathname();
@@ -20,11 +21,11 @@ function Hero({ setIntersecting, isvisible }) {
   // const hash = location.hash.substring(1);
   // console.log("the hash", section);
   const socialMediaicons = [
-    { name: "facebook", link: "", icon: FaFacebook },
-    { name: "facebook", link: "", icon: FaFacebook },
-    { name: "facebook", link: "", icon: FaFacebook },
-    { name: "facebook", link: "", icon: FaFacebook },
-    { name: "facebook", link: "", icon: FaFacebook },
+    { name: "linkedin", link: "", icon: FaLinkedinIn },
+    { name: "instagram", link: "", icon: BsInstagram },
+    { name: "twitter", link: "", icon: BsTwitter },
+    { name: "facebook", link: "", icon: FaFacebookF },
+    { name: "tiktok", link: "", icon: BsTiktok },
   ];
   const servivesProvided = [
     "A Frontend Developer",
@@ -47,17 +48,19 @@ function Hero({ setIntersecting, isvisible }) {
       id="home"
       className="Hero w-full flex h-screen  items- center justify-center bg-[#070303] relative"
     >
-      <div className=" absolute left-[30px] translate-y-[-50%] items-center top-[50%]  flex flex-col gap-2">
-        <h3 className="rotate-[90deg] text-white text-base">FOLLOW ME</h3>
-        <div className="w-[2px] h-[100px] bg-white"></div>
+      <div className=" absolute left-[40px] w-[20px] -translate-y- 1/2 items-center top-[30%]  flex flex-col gap-3">
+        <h3 className="rotate-[90deg] text-white text-base w-[15ch] shrink-0 m-3">
+          FOLLOW <span> ME</span>
+        </h3>
+        <div className="w-[2px] h-[100px] bg-[#16c0f0] shrink-0 "></div>
         {socialMediaicons.map((Item, key) => (
           <React.Fragment key={Item.name + key}>
-            <Item.icon size={20} className="text-white" />
+            <Item.icon size={10} className="text-white" />
           </React.Fragment>
         ))}
       </div>
-      <div className="w- full">
-        <h1 className="text-[#ffffff] text-center text-[75px] font-montserrat mt-[120px] mb-[30px] font-bold">
+      <div className="absolute z-10 -translate-x-1/2 -translate-y-1/2 left-[50%] top-[50%] w- full">
+        <h1 className="text-[#ffffff] whitespace-nowrap text-center text-[75px] font-montserrat mt-[60px] mb-[30px] font-bold">
           Chibuike Ewenike
         </h1>
         <p className="text-[red] text-[22px] text-center mb-[50px]">
@@ -88,7 +91,7 @@ function Hero({ setIntersecting, isvisible }) {
           </button>
         </div>
       </div>
-      <div className=" fixed right-[30px] translate-y-[-50%] top-[50%]  flex flex-col gap-2">
+      <div className=" fixed z-50 right-[30px] translate-y-[-50%] top-[50%]  flex flex-col gap-2">
         {navItems.map((item, key) => (
           <React.Fragment key={item.name}>
             <span
