@@ -4,17 +4,33 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 function Testimonials() {
   const indicators = (index) => (
-    <div className="indicator w-[20px] h-[20px] border border-[red] rounded-full">
-      {index + 1}
-    </div>
+    <span className="relative indicator flex h-3 w-3 mr-5">
+      <span
+        className={`${
+          null
+          // section === item.url ? "animate-ping bg-sky-400" : null
+        } absolute animate-ping bg-sky-400 inline-flex h-full w-full rounded-full  opacity-75`}
+      ></span>
+      <span
+        className={`relative inline-flex bg-sky-500 rounded-full h-3 w-3 border border-sky-400 ${
+          // section === item.url ? "bg-sky-500 " : null
+          null
+        }`}
+      ></span>
+    </span>
   );
+  const properties = {
+    prevArrow: <></>,
+    nextArrow: <></>,
+  };
+
   return (
     <section id="testimonials">
       <div>
         <h3 className="mt-[30px] text-[#f0f0f0] uppercase underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
           Testimonials
         </h3>
-        <Slide indicators={indicators} scale={1.4}>
+        <Slide indicators={indicators} {...properties}>
           {[1, 2, 3, 4].map((item, key) => (
             <div
               key={key}
