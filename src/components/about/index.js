@@ -47,7 +47,7 @@ function About({ setIntersecting, isvisible }) {
               I am a Full-Stack Developer
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] ">
-              I am a freelancer based in Lagos, Nigeria, and I'm very passionate
+              I am a freelancer based in Lagos, Nigeria, and I`m very passionate
               and dedicated to my work. With 7 years experience as a
               professional Full-Stack Web Developer, I have acquired the skills
               necessary to build great and premium websites.
