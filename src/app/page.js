@@ -1,5 +1,6 @@
 "use client";
 import Hero from "@/components/Hero";
+import PortfolioBuilder from "@/components/Portfolio/PortfolioBuilder";
 import About from "@/components/about";
 import Contact from "@/components/contact";
 import { UseMobileToggler } from "@/components/hooks/paramsSetter";
@@ -36,6 +37,10 @@ export default function Home() {
           setIntersecting={setIntersecting}
         />
         <Resume isvisible={isIntersecting} setIntersecting={setIntersecting} />
+        <PortfolioBuilder
+          isvisible={isIntersecting}
+          setIntersecting={setIntersecting}
+        />
         <Testimonials
           isvisible={isIntersecting}
           setIntersecting={setIntersecting}
