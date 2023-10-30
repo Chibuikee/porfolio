@@ -15,7 +15,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import "react-slideshow-image/dist/styles.css";
 import RecentWorksCarouselButtons from "./portfolioCarouselButtons";
 import Image from "next/image";
-const PortfolioCarousel = forwardRef((props, ref) => {
+
+function PortfolioCarouselMain(props, ref) {
   // console.log(pictureIndex, "hello");
   const slideRef = useRef();
   const [Index, setIndex] = useState(0);
@@ -99,6 +100,6 @@ const PortfolioCarousel = forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
-
+}
+const PortfolioCarousel = React.forwardRef(PortfolioCarouselMain);
 export default PortfolioCarousel;
