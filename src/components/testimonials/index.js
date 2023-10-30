@@ -26,25 +26,25 @@ function Testimonials() {
 
   const testimonialsList = [
     {
-      name: "Mayowa Adeboye",
+      name: "Mayowa Elizabeth",
       title: " Fullstack Engineer",
       testimony:
         " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
     },
     {
-      name: "Mayowa Adeboye",
+      name: "Mayowa Elizabeth",
       title: " Fullstack Engineer",
       testimony:
         " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
     },
     {
-      name: "Mayowa Adeboye",
+      name: "Mayowa Elizabeth",
       title: " Fullstack Engineer",
       testimony:
         " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
     },
     {
-      name: "Mayowa Adeboye",
+      name: "Mayowa Elizabeth",
       title: " Fullstack Engineer",
       testimony:
         " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
