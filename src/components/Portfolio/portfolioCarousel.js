@@ -50,9 +50,9 @@ function PortfolioCarouselMain(props, ref) {
     <div
       className={`${
         openPopup == true ? "block" : "hidden"
-      } fixed left-0 text-[white] flex items-center top-0 max-w-full h-screen bg-[#000000] z-[99]`}
+      } fixed left-0 text-[white] flex items-center top-0 max-w-full min-h-screen bg-[#000000] z-[99]`}
     >
-      <div className="flex absolute top-0 left-0 right-0 justify-between px-10 py-3">
+      <div className="flex absolute z-[99999] top-0 left-0 right-0 justify-between px-10 py-3">
         <span>
           {Index + 1} / {RWData.length}
         </span>
@@ -84,10 +84,10 @@ function PortfolioCarouselMain(props, ref) {
             <div
               key={image.title}
               // className="h-full mx-auto w-full relative flex items-center "
-              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:max-h-[500px]"
+              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:max-h-[400px]"
             >
               <Image
-                className="mx-auto  h-full w-[90%]"
+                className="mx-auto  h-full w-[90%] "
                 // className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
                 src={image.img}
                 // fill
