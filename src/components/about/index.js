@@ -27,8 +27,8 @@ function About({ setIntersecting, isvisible }) {
           <div className="relative basis-[50%] py-[7px]  h-[85vh] shrink-0 min-[992px]:basis-[41.66666667%]">
             <Image
               className="md:px-[22px] h-auto"
-              src="/images/img-1.jpeg"
-              //   src="/images/aboutImg.jpg"
+              // src="/images/img-1.jpeg"
+              src="/images/chibuike.jpg"
               style={{ objectFit: "cover" }}
               fill
               alt="Chibuike Ewenike"
