@@ -93,7 +93,7 @@ function Hero({ setIntersecting, isvisible }) {
           </ul>
         </p> */}
         <div className="flex max-md:flex-col items-center gap-5 justify-center bg-[transparent] text-white">
-          <Link href={`/?${createQueryString("section", "contact")}#contact`}>
+          <Link href={`/?${createQueryString("section", "contact")}#contactme`}>
             <button className="py-3 text-base w-[160px] bg-[#16c0f0] text-white font-medium rounded-[50px] border border-[#16c0f0]">
               Hire me
             </button>

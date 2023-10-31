@@ -1,11 +1,11 @@
 // import alex from "/alex-varela-OEhWh_xz_JM-unsplash.jpg"
 export const RWData = [
-  // {
-  //   img: "https://preview.colorlib.com/theme/glint/images/portfolio/gallery/g-shutterbug.jpg",
-  //   title: "SHUTTERBUG",
-  //   category: "Branding",
-  //   desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.",
-  // },
+  {
+    img: "https://preview.colorlib.com/theme/glint/images/portfolio/gallery/g-shutterbug.jpg",
+    title: "SHUTTERBUG",
+    category: "Branding",
+    desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.",
+  },
   {
     img: "/images/alex-varela-OEhWh_xz_JM-unsplash.jpg",
     title: "woodcraft",

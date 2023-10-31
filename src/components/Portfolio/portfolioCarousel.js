@@ -50,15 +50,15 @@ function PortfolioCarouselMain(props, ref) {
     <div
       className={`${
         openPopup == true ? "block" : "hidden"
-      } fixed text-[white] top-0 w-screen h-screen bg-[#000000] z-[99]`}
+      } fixed left-0 text-[white] flex items-center top-0 max-w-full h-screen bg-[#000000] z-[99]`}
     >
-      <div className="flex justify-between px-10 py-3">
+      <div className="flex absolute top-0 left-0 right-0 justify-between px-10 py-3">
         <span>
           {Index + 1} / {RWData.length}
         </span>
         <div className="flex gap-5 ">
-          <BsZoomIn />
-          <RiFullscreenFill />
+          {/* <BsZoomIn /> */}
+          {/* <RiFullscreenFill /> */}
           <BsShare />
           <AiOutlineClose
             onClick={(e) => {
@@ -70,34 +70,39 @@ function PortfolioCarouselMain(props, ref) {
           />
         </div>
       </div>
+      <div className="w-full ">
+        <Slide
+          ref={slideRef}
+          autoplay={false}
+          transitionDuration={0}
+          {...RecentWorksCarouselButtons}
+          onChange={(from, to) => {
+            setIndex(to);
+          }}
+        >
+          {RWData.map((image) => (
+            <div
+              key={image.title}
+              // className="h-full mx-auto w-full relative flex items-center "
+              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:max-h-[500px]"
+            >
+              <Image
+                className="mx-auto  h-full w-[90%]"
+                // className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
+                src={image.img}
+                // fill
+                width={1000}
+                height={1000}
+                alt={`${image.title}`}
+              />
+            </div>
+          ))}
+        </Slide>
 
-      <Slide
-        ref={slideRef}
-        autoplay={false}
-        transitionDuration={0}
-        {...RecentWorksCarouselButtons}
-        onChange={(from, to) => {
-          setIndex(to);
-        }}
-      >
-        {RWData.map((image) => (
-          <div
-            key={image.title}
-            className="max-h-[355px] relative flex items-center xl:max-h-[400px]"
-          >
-            <Image
-              className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
-              src={image.img}
-              fill
-              alt={`${image.title}`}
-            />
-          </div>
-        ))}
-      </Slide>
-
-      <div className="text-center text-[white] p-[10px] hello ">
-        <h4 className="mb-[0.6rem]">{item.title}</h4>
-        <h4 className="text-[13px] mb-[3rem]">{item.desc}</h4>
+        <div className="text-center text-[white] p-[10px] hello ">
+          <h4 className="mb-[0.6rem]">{item.title}</h4>
+          <h4 className="text-[13px] mb-[3rem] break-words">{item.desc}</h4>
+        </div>
       </div>
     </div>
   );
