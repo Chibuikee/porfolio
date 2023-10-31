@@ -1,6 +1,11 @@
 "use client";
 import { ImHome3 } from "react-icons/im";
-import { FaServer } from "react-icons/fa";
+import { FaCodeMerge } from "react-icons/fa6";
+import { BsFillPersonFill } from "react-icons/bs";
+import { AiFillProfile } from "react-icons/ai";
+import { PiPhoneCallFill } from "react-icons/pi";
+import { MdReviews } from "react-icons/md";
+import { FaBloggerB, FaFileCode } from "react-icons/fa";
 export const navItems = [
   {
     icon: ImHome3,
@@ -9,32 +14,32 @@ export const navItems = [
     url: "home",
   },
   {
-    icon: ImHome3,
+    icon: BsFillPersonFill,
     name: "About",
     url: "about",
   },
   {
-    icon: FaServer,
+    icon: FaFileCode,
     name: "Resume",
     url: "resume",
   },
   {
-    icon: ImHome3,
+    icon: FaCodeMerge,
     name: "Portfolio",
     url: "portfolio",
   },
   {
-    icon: ImHome3,
+    icon: MdReviews,
     name: "Testimonials",
     url: "testimonials",
   },
   {
-    icon: ImHome3,
+    icon: FaBloggerB,
     name: "Blog",
     url: "blog",
   },
   {
-    icon: ImHome3,
+    icon: PiPhoneCallFill,
     name: "Contact",
     url: "contact",
   },

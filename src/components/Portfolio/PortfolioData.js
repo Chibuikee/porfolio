@@ -27,7 +27,7 @@ export const RWData = [
   {
     img: "/images/ville-kaisla-HNCSCpWrVJA-unsplash.jpg",
     title: "Guitarist",
-    category: "Branding",
+    category: "Photography",
     desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.",
   },
   {

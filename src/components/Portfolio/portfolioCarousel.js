@@ -83,11 +83,12 @@ function PortfolioCarouselMain(props, ref) {
         {RWData.map((image) => (
           <div
             key={image.title}
-            className="max-h-[355px] flex items-center xl:max-h-[400px]"
+            className="max-h-[355px] relative flex items-center xl:max-h-[400px]"
           >
             <Image
-              className="xs:h-[455px] pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
+              className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
               src={image.img}
+              fill
               alt={`${image.title}`}
             />
           </div>

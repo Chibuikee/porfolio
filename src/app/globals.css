@@ -119,6 +119,17 @@
 }
 
 /* portfolio  */
+.newset {
+  box-shadow: inset 0 -6px 0 #ede574;
+}
+
+.activeitem {
+  box-shadow: inset 0 -6px 0 #ede574;
+}
+.activeitem:hover {
+  box-shadow: inset 0 -11px 0 #ede574;
+  transition: all ease-in-out 0.2s;
+}
 .iconDrop {
   opacity: 1;
   top: -100px;

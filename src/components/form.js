@@ -65,6 +65,8 @@ const Form = () => {
       console.log(error);
     }
   }
+
+  console.log(formik.touched);
   return (
     <>
       <section className="basis-[65%] md:w-full py-20 md:py-0">
@@ -97,8 +99,15 @@ const Form = () => {
                         <textarea
                           className="appearance-none mt-4 block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                           name={item.name}
+                          value={formik.values[item.name]}
+                          onBlur={() => {
+                            formik.setTouched({
+                              ...formik.touched,
+                              [item.name]: true,
+                            });
+                            // console.log("clicked", item.name);
+                          }}
                           onChange={(e) => {
-                            console.log("current value", e.target.value);
                             const { value, name } = e.target;
                             formik.setValues((prev) => ({
                               ...prev,
@@ -113,8 +122,14 @@ const Form = () => {
                           className="appearance-none mt-4 w-full block bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                           placeholder={item.placeholder}
                           value={formik.values[item.name]}
+                          onBlur={() => {
+                            formik.setTouched({
+                              ...formik.touched,
+                              [item.name]: true,
+                            });
+                            // console.log("clicked", item.name);
+                          }}
                           onChange={(e) => {
-                            console.log("current value", e.target.value);
                             const { value, name } = e.target;
                             formik.setValues((prev) => ({
                               ...prev,
@@ -123,11 +138,12 @@ const Form = () => {
                           }}
                         ></input>
                       )}
-                      {formik.errors[item.name] && (
-                        <p className="text-red-500 text-xs italic">
-                          Please complete field
-                        </p>
-                      )}
+                      {formik.touched[item.name] &&
+                        formik.errors[item.name] && (
+                          <p className="text-red-500 text-xs italic">
+                            {formik.errors[item.name]}
+                          </p>
+                        )}
                     </div>
                   ))}
                 </div>

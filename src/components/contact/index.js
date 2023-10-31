@@ -17,7 +17,7 @@ function Contact() {
     },
   ];
   return (
-    <section>
+    <section id="contact">
       <div>
         <h3 className="mt-[30px] text-[#f0f0f0] underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
           CONTACT ME

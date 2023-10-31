@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { BsInstagram, BsTwitter, BsTiktok } from "react-icons/bs";
 import Image from "next/image";
+import Link from "next/link";
 
 function Hero({ setIntersecting, isvisible }) {
   const pathname = usePathname();
@@ -92,9 +93,11 @@ function Hero({ setIntersecting, isvisible }) {
           </ul>
         </p> */}
         <div className="flex max-md:flex-col items-center gap-5 justify-center bg-[transparent] text-white">
-          <button className="py-3 text-base w-[160px] bg-[#16c0f0] text-white font-medium rounded-[50px] border border-[#16c0f0]">
-            Hire me
-          </button>
+          <Link href={`/?${createQueryString("section", "contact")}#contact`}>
+            <button className="py-3 text-base w-[160px] bg-[#16c0f0] text-white font-medium rounded-[50px] border border-[#16c0f0]">
+              Hire me
+            </button>
+          </Link>
           <button className="py-3 text-base w-[160px] border-[#16c0f0] border bg-[transparent] text-[#16c0f0] rounded-[50px]">
             Download CV
           </button>
