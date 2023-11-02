@@ -8,7 +8,8 @@ import { Tooltip } from "react-tooltip";
 import { UseMobileToggler } from "../hooks/paramsSetter";
 import { usePathname } from "next/navigation";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-import { BsInstagram, BsTwitter, BsTiktok } from "react-icons/bs";
+import { BsInstagram, BsTwitter } from "react-icons/bs";
+import { VscGithub } from "react-icons/vsc";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,21 +24,33 @@ function Hero({ setIntersecting, isvisible }) {
   // const hash = location.hash.substring(1);
   // console.log("the hash", section);
   const socialMediaicons = [
-    { name: "linkedin", link: "", icon: FaLinkedinIn },
-    { name: "instagram", link: "", icon: BsInstagram },
-    { name: "twitter", link: "", icon: BsTwitter },
-    { name: "facebook", link: "", icon: FaFacebookF },
-    { name: "tiktok", link: "", icon: BsTiktok },
+    { name: "tiktok", link: "https://github.com/Chibuikee", icon: VscGithub },
+    {
+      name: "linkedin",
+      link: "https://www.linkedin.com/in/chibuike-ewenike",
+      icon: FaLinkedinIn,
+    },
+    { name: "twitter", link: "https://twitter.com/sopsy_c", icon: BsTwitter },
+    {
+      name: "instagram",
+      link: "https://www.instagram.com/sopsy_c/",
+      icon: BsInstagram,
+    },
+    {
+      name: "facebook",
+      link: "https://web.facebook.com/victor.ewenike",
+      icon: FaFacebookF,
+    },
   ];
   const servivesProvided = [
     "A Frontend Developer",
     200,
-    "A Mobile Apps Developer",
-    200,
-    "An Analytics Engineer",
-    200,
-    "An Seo Engineer",
-    200,
+    // "A Mobile Apps Developer",
+    // 200,
+    // "An Analytics Engineer",
+    // 200,
+    // "An Seo Engineer",
+    // 200,
     "A UI/UX Designer",
     200,
     "A Backend Developer",
@@ -65,7 +78,9 @@ function Hero({ setIntersecting, isvisible }) {
         <div className="w-[2px] h-[100px] bg-[#16c0f0] shrink-0 "></div>
         {socialMediaicons.map((Item, key) => (
           <React.Fragment key={Item.name + key}>
-            <Item.icon size={10} className="text-white" />
+            <Link href={Item.link}>
+              <Item.icon size={10} className="text-white" />
+            </Link>
           </React.Fragment>
         ))}
       </div>
@@ -98,9 +113,14 @@ function Hero({ setIntersecting, isvisible }) {
               Hire me
             </button>
           </Link>
-          <button className="py-3 text-base w-[160px] border-[#16c0f0] border bg-[transparent] text-[#16c0f0] rounded-[50px]">
-            Download CV
-          </button>
+          <a download="Chibuike Ewenike CV" href={`/images/bg.jpg`}>
+            <button
+              download
+              className="py-3 text-base w-[160px] border-[#16c0f0] border bg-[transparent] text-[#16c0f0] rounded-[50px]"
+            >
+              Download CV
+            </button>
+          </a>
         </div>
       </div>
       <div className=" fixed z-50 right-[30px] translate-y-[-50%] top-[50%] flex flex-col gap-2">

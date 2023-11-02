@@ -25,9 +25,9 @@ export const RWData = [
     desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.",
   },
   {
-    img: "/images/ville-kaisla-HNCSCpWrVJA-unsplash.jpg",
-    title: "Guitarist",
-    category: "Photography",
+    img: "/images/growthclub.png",
+    title: "Growth Club",
+    category: "Frontend",
     desc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.",
   },
   {

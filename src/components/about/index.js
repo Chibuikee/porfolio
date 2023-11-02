@@ -1,9 +1,12 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import useOnScreen from "../hooks/hooks";
+import Link from "next/link";
+import { UseMobileToggler } from "../hooks/paramsSetter";
 
 function About({ setIntersecting, isvisible }) {
-  // { isIntersecting, setIntersecting }
+  const { mobileView, toggler, section, router, createQueryString } =
+    UseMobileToggler();
   const Aboutref = useRef(null);
   useOnScreen(Aboutref, setIntersecting);
   //   console.log("intersectingAbout", isvisible);
@@ -26,7 +29,7 @@ function About({ setIntersecting, isvisible }) {
         <div className=" lg:flex">
           <div className="relative basis-[50%] py-[7px]  h-[85vh] shrink-0 min-[992px]:basis-[41.66666667%]">
             <Image
-              className="md:px-[22px] h-auto"
+              className="lg:px-[22px] h-auto"
               // src="/images/img-1.jpeg"
               src="/images/chibuike.jpg"
               style={{ objectFit: "cover" }}
@@ -34,7 +37,7 @@ function About({ setIntersecting, isvisible }) {
               alt="Chibuike Ewenike"
             />
           </div>
-          <div className="basis py-[7px] fonts-monserrat px-[22px]">
+          <div className="basis py-[7px] fonts-monserrat lg:px-[22px]">
             {/* <div className="relative inline-block"> */}
             <h3 className="text-[#f0f0f0] underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
               ABOUT ME
@@ -47,15 +50,23 @@ function About({ setIntersecting, isvisible }) {
               I am a Full-Stack Developer
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] ">
-              I am a freelancer based in Lagos, Nigeria, and I`m very passionate
-              and dedicated to my work. With 7 years experience as a
-              professional Full-Stack Web Developer, I have acquired the skills
-              necessary to build great and premium websites.
+              I'm an innovative and adaptable front-end developer with 2 years
+              of experience in creating exceptional and scalable web interfaces.
+              Proficient in NextJS, React, TypeScript, JavaScript, NodeJs,
+              ExpressJs, MongoDb, Tailwind CSS, Firebase, Git, and Redux, I
+              thrive in dynamic environments.
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] border-b-[1px] border-solid border-[#374757]">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco
+              I'm passionate about startups, constantly learning, and
+              problem-solving. My goal is to partner with like-minded
+              individuals and companies to build captivating digital
+              experiences.{" "}
+              <Link
+                href={`/?${createQueryString("section", "contact")}#contactme`}
+                className="text-[green]"
+              >
+                Let's connect and achieve together!
+              </Link>
             </p>
             {/* <div className="h-[2px] w-full "></div> */}
             <div className="md:grid grid-cols-2 py-[25px] border-t-[1px] border-solid border-[#374757] ">

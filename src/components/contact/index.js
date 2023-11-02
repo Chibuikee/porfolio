@@ -5,15 +5,24 @@ function Contact() {
   const contactDetails = [
     {
       title: "Location",
-      info: ["Apapa, Lagos, Nigeria.", "Yaba, Lagos, Nigeria."],
+      info: [
+        ["Apapa, Lagos, Nigeria.", "https://maps.app.goo.gl/XaE3A6184B1cnEdV7"],
+        ["Yaba, Lagos, Nigeria.", "https://maps.app.goo.gl/CeP6Vqba3jiDB96FA"],
+      ],
     },
     {
       title: "Email",
-      info: ["sopewenike@yahoo.com", "sopewenike@gmail.com"],
+      info: [
+        ["sopewenike@yahoo.com", "mailto:sopewenike@yahoo.com"],
+        ["sopewenike@gmail.com", "mailto:sopewenike@gmail.com"],
+      ],
     },
     {
       title: "Phone",
-      info: ["+234 902125576", "09032125576"],
+      info: [
+        ["+234 902125576", "tel:+234 902125576"],
+        ["09032125576", "tel:09032125576"],
+      ],
     },
   ];
   return (
@@ -30,10 +39,10 @@ function Contact() {
                   {item.title}
                 </h2>
                 <h3 className="text-center relative text-[13px] mx-[20px] mb-[15px] border-b-[#373757] border-b pb-[15px]">
-                  {item.info.map((info, key) => (
-                    <span key={key} className="block mt-[5px]">
+                  {item.info.map(([info, href], key) => (
+                    <a href={href} key={key} className="block mt-[5px]">
                       {info}
-                    </span>
+                    </a>
                   ))}
                 </h3>
               </React.Fragment>
