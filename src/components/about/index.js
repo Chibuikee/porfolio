@@ -65,7 +65,7 @@ function About({ setIntersecting, isvisible }) {
                 href={`/?${createQueryString("section", "contact")}#contactme`}
                 className="text-[green]"
               >
-                Let's connect and achieve together!
+                Let`s connect and achieve together!
               </Link>
             </p>
             {/* <div className="h-[2px] w-full "></div> */}
