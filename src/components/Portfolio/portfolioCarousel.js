@@ -28,9 +28,9 @@ function PortfolioCarouselMain(props, ref) {
   }));
   useEffect(() => {
     function ScrollOff(e) {
-      console.log("event listener is working");
+      // console.log("event listener is working");
       setPopup(false);
-      console.log(e);
+      // console.log(e);
     }
     if (openPopup === true) {
       window.addEventListener("scroll", ScrollOff);

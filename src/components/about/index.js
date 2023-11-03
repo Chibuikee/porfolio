@@ -16,7 +16,7 @@ function About({ setIntersecting, isvisible }) {
     { name: "Title", value: "Mr" },
     { name: "Phone", value: "+234 9032125576" },
     { name: "Address", value: "Apapa, Lagos, Nigeria" },
-    { name: "Website", value: "www.softdev.com" },
+    { name: "Website", value: "https://github.com/Chibuikee" },
     { name: "Email", value: "sopewenike@yahoo.com" },
   ];
   return (
