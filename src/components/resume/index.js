@@ -2,10 +2,10 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import useOnScreen from "../hooks/hooks";
 import { FcCalendar } from "react-icons/fc";
-function Resume({ setIntersecting, isvisible }) {
+function Resume() {
   // { isIntersecting, setIntersecting }
   const resumeref = useRef(null);
-  useOnScreen(resumeref, setIntersecting);
+  useOnScreen(resumeref);
   //   console.log("intersectingresume", isvisible);
   const resumeDetails = [
     {

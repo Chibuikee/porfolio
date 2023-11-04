@@ -13,9 +13,6 @@ import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
-  const [isIntersecting, setIntersecting] = useState(false);
-  const { createQueryString, router } = UseMobileToggler();
-  console.log("intersectingnow", isIntersecting);
   // useEffect(() => {
   //   router.push(
   //     `/?${createQueryString("section", isIntersecting?.hash)}#${
@@ -31,30 +28,15 @@ export default function Home() {
       <ToastContainer />
       <main className="relative bg-[#263446]">
         <Sidebar />
-        <Hero isvisible={isIntersecting} setIntersecting={setIntersecting} />
+        <Hero />
         <Nav />
         <div className="px-[30px] h- full lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
-          <About isvisible={isIntersecting} setIntersecting={setIntersecting} />
-          <Services
-            isvisible={isIntersecting}
-            setIntersecting={setIntersecting}
-          />
-          <Resume
-            isvisible={isIntersecting}
-            setIntersecting={setIntersecting}
-          />
-          <PortfolioBuilder
-            isvisible={isIntersecting}
-            setIntersecting={setIntersecting}
-          />
-          <Testimonials
-            isvisible={isIntersecting}
-            setIntersecting={setIntersecting}
-          />
-          <Contact
-            isvisible={isIntersecting}
-            setIntersecting={setIntersecting}
-          />
+          <About />
+          <Services />
+          <Resume />
+          <PortfolioBuilder />
+          <Testimonials />
+          <Contact />
         </div>
       </main>
     </>

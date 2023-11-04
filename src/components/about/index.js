@@ -4,11 +4,11 @@ import useOnScreen from "../hooks/hooks";
 import Link from "next/link";
 import { UseMobileToggler } from "../hooks/paramsSetter";
 
-function About({ setIntersecting, isvisible }) {
+function About() {
   const { mobileView, toggler, section, router, createQueryString } =
     UseMobileToggler();
   const Aboutref = useRef(null);
-  useOnScreen(Aboutref, setIntersecting);
+  const AboutIsvisible = useOnScreen(Aboutref);
   //   console.log("intersectingAbout", isvisible);
 
   const bio = [
@@ -23,7 +23,9 @@ function About({ setIntersecting, isvisible }) {
     <section
       ref={Aboutref}
       id="about"
-      className="pt-[30px] h- screen text-white"
+      className={` ${
+        AboutIsvisible ? "bg- [#ff000028]" : null
+      } pt-[30px] h- screen text-white`}
     >
       <div className="">
         <div className=" lg:flex">

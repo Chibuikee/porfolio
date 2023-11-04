@@ -4,7 +4,10 @@ import { FaLink } from "react-icons/fa";
 import { RWData } from "./PortfolioData";
 import PortfolioCarousel from "./portfolioCarousel";
 import Image from "next/image";
+import useOnScreen from "../hooks/hooks";
 function PortfolioBuilder() {
+  const Portfolioref = useRef(null);
+  const PortfolioIsvisible = useOnScreen(Portfolioref);
   const [pickedItems, setPickedItems] = useState(null);
   const [active, setActive] = useState("All");
   const childRecentWorksRef = useRef();
@@ -30,7 +33,7 @@ function PortfolioBuilder() {
     }
   }
   return (
-    <section id="portfolio" className="">
+    <section ref={Portfolioref} id="portfolio" className="">
       <h3 className="mt-[30px] text-[#f0f0f0] uppercase underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
         Portfolio
       </h3>

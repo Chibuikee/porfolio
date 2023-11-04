@@ -4,9 +4,12 @@ import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { FaQuoteRight } from "react-icons/fa6";
+import useOnScreen from "../hooks/hooks";
 
 function Testimonials() {
-  const TestimonyPageRef = useRef();
+  const TestimonyPageRef = useRef(null);
+  const TestimonyRef = useRef();
+  useOnScreen(TestimonyRef);
   const indicators = (index) => (
     <span className="relative active:bg-[red] indicator flex h-3 w-3 mr-5">
       <span
@@ -77,7 +80,7 @@ function Testimonials() {
     // arrows: true,
   };
   return (
-    <section id="testimonials">
+    <section ref={TestimonyRef} id="testimonials">
       <div>
         <h3 className="mt-[30px] text-[#f0f0f0] uppercase underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
           Testimonials

@@ -1,7 +1,14 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function useOnScreen(ref, setIntersecting) {
+export default function useOnScreen(ref) {
+  const router = useRouter();
+  const [isIntersecting, setIntersecting] = useState(false);
+  let options = {
+    root: null,
+    // threshold: 0.1,
+  };
   useEffect(() => {
     if (typeof IntersectionObserver !== "undefined" && ref?.current) {
       let observer = new IntersectionObserver((entries) => {
@@ -11,9 +18,15 @@ export default function useOnScreen(ref, setIntersecting) {
               hash: entry.target.id,
               isVisible: entry.isIntersecting,
             });
+            router.push(
+              `?section=${entry.target.id}#${entry.target.id}`,
+              { scroll: false }
+              // `/?${createQueryString("section", entry.target.id)}#${item.url}`
+            );
+            console.log("currently intersecting", entry.target.id);
           }
         });
-      });
+      }, options);
 
       observer.observe(ref.current);
 
@@ -25,6 +38,8 @@ export default function useOnScreen(ref, setIntersecting) {
       };
     }
   }, [ref, setIntersecting]);
+
+  return isIntersecting;
 }
 
 // export default function useOnScreen(ref, setIntersecting) {

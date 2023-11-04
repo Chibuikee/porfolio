@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import { BsInstagram } from "react-icons/bs";
 import { FaLightbulb, FaCode, FaServer, FaPencilRuler } from "react-icons/fa";
+import useOnScreen from "../hooks/hooks";
 function Services() {
+  const Servicesref = useRef(null);
+  useOnScreen(Servicesref);
   const skills = [
     {
       name: "FRONTEND DEVELOPMENT",
@@ -29,7 +32,7 @@ function Services() {
     },
   ];
   return (
-    <section id="services" className="px- [15px] h -screen">
+    <section ref={Servicesref} id="services" className="px- [15px] h -screen">
       <div>
         <h3 className="mt-[30px] text-[#f0f0f0] underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
           MY SERVICES

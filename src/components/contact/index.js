@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import Form from "../form";
+import useOnScreen from "../hooks/hooks";
 
 function Contact() {
+  const Contactref = useRef(null);
+  useOnScreen(Contactref);
   const contactDetails = [
     {
       title: "Location",
@@ -26,7 +29,7 @@ function Contact() {
     },
   ];
   return (
-    <section id="contact">
+    <section ref={Contactref} id="contact">
       <div>
         <h3 className="mt-[30px] text-[#f0f0f0] underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
           CONTACT ME

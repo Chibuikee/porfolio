@@ -13,12 +13,11 @@ import { VscGithub } from "react-icons/vsc";
 import Image from "next/image";
 import Link from "next/link";
 
-function Hero({ setIntersecting, isvisible }) {
-  const pathname = usePathname();
+function Hero() {
   const { mobileView, toggler, section, router, createQueryString } =
     UseMobileToggler();
   const homeRef = useRef(null);
-  useOnScreen(homeRef, setIntersecting);
+  useOnScreen(homeRef);
   // console.log("intersectingHero", isvisible);
   //   console.log(isvisible, "from intro page");
   // const hash = location.hash.substring(1);
