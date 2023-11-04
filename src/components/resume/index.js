@@ -13,7 +13,7 @@ function Resume() {
       date: "2020 - 2021",
       type: "Freelance",
       details:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
+        "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together.",
       position: "justify-center md:justify-start",
     },
     {
@@ -33,11 +33,11 @@ function Resume() {
       position: "justify-center md:justify-start",
     },
     {
-      title: "Back End Developer",
-      date: "2022 - 2023",
+      title: "Front End Developer",
+      date: "2023 - Till date",
       type: "Freelance",
       details:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusm tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit incididunt ut labore et.",
+        "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together.",
       position: "justify-center md:justify-end",
     },
   ];

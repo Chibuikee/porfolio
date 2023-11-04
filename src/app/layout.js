@@ -57,7 +57,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${montserrat.variable} ${open_Sans.variable} ${inter.variable} ${hind.variable} ${poppins.variable} ${lato.variable} h-full  w-full font-sans`}
     >
-      {/* <head>
+      <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link
           rel="apple-touch-icon"
@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-      </head> */}
+      </head>
       <body className="h-full  w-full">{children}</body>
     </html>
   );
