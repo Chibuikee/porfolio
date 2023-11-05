@@ -5,6 +5,7 @@ import "react-slideshow-image/dist/styles.css";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { FaQuoteRight } from "react-icons/fa6";
 import useOnScreen from "../hooks/hooks";
+import Link from "next/link";
 
 function Testimonials() {
   const TestimonyPageRef = useRef(null);
@@ -29,28 +30,36 @@ function Testimonials() {
 
   const testimonialsList = [
     {
-      name: "Mayowa Elizabeth",
+      name: "Adebayo oluwafemi",
       title: " Fullstack Engineer",
+      img: "femi.jpg",
+      link: "https://www.linkedin.com/in/adebayo-oluwafemi-46b87718b/",
       testimony:
-        " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
+        "Great working with Chibuike , His frontend skills in Javascript and NextJS are seriously impressive. He writes great mobile responsive codes and always willing to learn. Plus, his positive attitude makes him a great team player. You'll love having him on board!",
     },
     {
-      name: "Mayowa Elizabeth",
+      name: "Folahan Areago",
       title: " Fullstack Engineer",
+      img: "fola.jpg",
+      link: "https://www.linkedin.com/in/folahan-areago-0a7818164/",
       testimony:
-        " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
+        "I am delighted to recommend Chibuike, a highly skilled Frontend Developer. His expertise in JavaScript, React, NextJS, TypeScript, Firebase, Tailwind, and Git is truly impressive. Chibuike has an exceptional eye for detail and consistently delivers exceptional web experiences.",
     },
     {
-      name: "Mayowa Elizabeth",
+      name: "Adebayo oluwafemi",
       title: " Fullstack Engineer",
+      img: "femi.jpg",
+      link: "https://www.linkedin.com/in/adebayo-oluwafemi-46b87718b/",
       testimony:
-        " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
+        "Great working with Chibuike , His frontend skills in Javascript and NextJS are seriously impressive. He writes great mobile responsive codes and always willing to learn. Plus, his positive attitude makes him a great team player. You'll love having him on board!",
     },
     {
-      name: "Mayowa Elizabeth",
+      name: "Folahan Areago",
       title: " Fullstack Engineer",
+      img: "fola.jpg",
+      link: "https://www.linkedin.com/in/folahan-areago-0a7818164/",
       testimony:
-        " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
+        "I am delighted to recommend Chibuike, a highly skilled Frontend Developer. His expertise in JavaScript, React, NextJS, TypeScript, Firebase, Tailwind, and Git is truly impressive. Chibuike has an exceptional eye for detail and consistently delivers exceptional web experiences.",
     },
   ];
   const [slidesToShow, setSlidesToShow] = useState(1);
@@ -100,15 +109,22 @@ function Testimonials() {
               key={key}
               className="mb-[45px] text-center p-[35px_30px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-[98%] border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]"
             >
-              <div className="mx-auto relative h-[50px] w-[50px]">
-                <Image src="/images/img-1.jpeg" fill alt="Satisfied clients" />
+              <div className="mx-auto relative h-[50px] w-[50px] rounded-full overflow-clip">
+                <Image
+                  src={"/images/" + item.img}
+                  fill
+                  alt="Satisfied clients"
+                />
               </div>
               <div className="mx-[15px] mt-[10px] font-semibold">
-                <h3 className="text-base tracking-[1px] font- montserrat uppercase leading-[1.8rem] text-white">
+                <Link
+                  href={item.link}
+                  className="text-base tracking-[1px] font- montserrat uppercase leading-[1.8rem] text-white"
+                >
                   {item.name}
-                </h3>
+                </Link>
 
-                <h3 className="text-[13px]  leading-[1.6rem] text-[#16c0f0] tracking-[.7px]">
+                <h3 className="text-[13px]  leading-[.6rem] text-[#16c0f0] tracking-[.7px]">
                   {item.title}
                 </h3>
               </div>
