@@ -19,7 +19,7 @@ function Resume() {
     {
       title: "Marketing Strategist",
       date: "2020 - 2022",
-      type: "Freelance",
+      type: "Musknet",
       details:
         "Led the end-to-end development of an e-commerce platform using Next.js,firebase and other state of the art tools. Implemented modern and responsive user interfaces that enhanced user engagement and improved overall site performance.",
       position: "justify-center md:justify-end",
@@ -27,7 +27,7 @@ function Resume() {
     {
       title: "SEO Developer",
       date: "2021 - 2021",
-      type: "Freelance",
+      type: "Techdia Academy",
       details:
         "Designed and developed the landing page of a tech academy. Created the contents for the site and made it seo friendly",
       position: "justify-center md:justify-start",
@@ -35,7 +35,7 @@ function Resume() {
     {
       title: "Front End Developer",
       date: "2023 - Till date",
-      type: "Freelance",
+      type: "Growth Club",
       details:
         "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together using nextjs 13 and other industry standard tools.",
       position: "justify-center md:justify-end",
