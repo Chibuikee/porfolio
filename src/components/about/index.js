@@ -52,14 +52,14 @@ function About() {
               I am a Full-Stack Developer
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] ">
-              I`m an innovative and adaptable front-end developer with 2 years
-              of experience in creating exceptional and scalable web interfaces.
-              Proficient in NextJS, React, TypeScript, JavaScript, NodeJs,
-              ExpressJs, MongoDb, Tailwind CSS, Firebase, Git, and Redux, I
-              thrive in dynamic environments.
+              I&#39;m an innovative and adaptable front-end developer with 2
+              years of experience in creating exceptional and scalable web
+              interfaces. Proficient in NextJS, React, TypeScript, JavaScript,
+              NodeJs, ExpressJs, MongoDb, Tailwind CSS, Firebase, Git, and
+              Redux, I thrive in dynamic environments.
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] border-b-[1px] border-solid border-[#374757]">
-              I`m passionate about startups, constantly learning, and
+              I&#39;m passionate about startups, constantly learning, and
               problem-solving. My goal is to partner with like-minded
               individuals and companies to build captivating digital
               experiences.{" "}
@@ -67,7 +67,7 @@ function About() {
                 href={`/?${createQueryString("section", "contact")}#contactme`}
                 className="text-[green]"
               >
-                Let`s connect and achieve together!
+                Let&#39;s connect and achieve together!
               </Link>
             </p>
             {/* <div className="h-[2px] w-full "></div> */}

@@ -11,9 +11,9 @@ function Resume() {
     {
       title: "Front End Developer",
       date: "2020 - 2021",
-      type: "Freelance",
+      type: "Cr8v Media",
       details:
-        "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together.",
+        "Spearheaded the development of the company's website, which served as the primary online platform for their media content. Leveraged modern frontend technologies, including nextjs and popular frameworks such as tailwind css, to craft a fast, responsive and feature-rich website.",
       position: "justify-center md:justify-start",
     },
     {
