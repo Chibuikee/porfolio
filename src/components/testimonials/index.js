@@ -86,6 +86,7 @@ function Testimonials() {
     duration: 5000,
     transitionDuration: 500,
     slidesToShow: slidesToShow,
+    slidesToScroll: slidesToShow,
     // arrows: true,
   };
   return (
@@ -98,9 +99,9 @@ function Testimonials() {
           indicators={indicators}
           ref={TestimonyPageRef}
           // autoplay={true}
-          slidesToScroll={2}
+          // slidesToScroll={2}
           // responsive={responsiveSettings}
-          slidesToShow={2}
+          // slidesToShow={2}
           arrows={false}
           {...properties}
         >

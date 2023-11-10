@@ -5,14 +5,15 @@ import { RWData } from "./PortfolioData";
 import PortfolioCarousel from "./portfolioCarousel";
 import Image from "next/image";
 import useOnScreen from "../hooks/hooks";
+import { useImageSelector } from "../hooks/imagePicker";
 function PortfolioBuilder() {
   const Portfolioref = useRef(null);
   const PortfolioIsvisible = useOnScreen(Portfolioref);
   const [pickedItems, setPickedItems] = useState(null);
   const [active, setActive] = useState("All");
   const childRecentWorksRef = useRef();
-  console.log("from parent component");
-
+  // console.log("from parent component");
+  const imagePath = useImageSelector();
   const RecentItems = [
     { title: "All", url: "" },
     { title: "Branding", url: "" },
@@ -32,6 +33,7 @@ function PortfolioBuilder() {
       setActive(ClickedItem);
     }
   }
+  console.log("image picked", imagePath);
   return (
     <section ref={Portfolioref} id="portfolio" className="">
       <h3 className="mt-[30px] text-[#f0f0f0] uppercase underAbout relative inline-block text-[20px] md:text-[24px] lg:text-[31px] font-semibold tracking-[.3px] leading-[normal] mb-[40px]">
@@ -94,7 +96,7 @@ function PortfolioBuilder() {
                 childRecentWorksRef.current.setGoTo(index);
                 childRecentWorksRef.current.setPopup(true);
               }}
-              className="recent-img z-[70]"
+              className="recent-img z-[70] object- cover"
               style={{ height: "100%", width: "100%" }}
               // height="100%"
               // width="100%"
