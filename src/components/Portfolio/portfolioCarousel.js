@@ -60,7 +60,12 @@ function PortfolioCarouselMain(props, ref) {
         <div className="flex gap-5 ">
           {/* <BsZoomIn /> */}
           {/* <RiFullscreenFill /> */}
-          <BsShare />
+          <Link
+            onClick={() => navigator.clipboard.writeText(item.link)}
+            href={item.link}
+          >
+            <BsShare />
+          </Link>
           <AiOutlineClose
             onClick={(e) => {
               e.stopPropagation();
@@ -85,10 +90,10 @@ function PortfolioCarouselMain(props, ref) {
             <div
               key={image.title}
               // className="h-full mx-auto w-full relative flex items-center "
-              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:max-h-[400px]"
+              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:h-[400px]"
             >
               <Image
-                className="mx-auto  h-full w-[90%] "
+                className="mx-auto  h-full w-[90%] object- contain"
                 // className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
                 src={image.img}
                 // fill
@@ -108,7 +113,9 @@ function PortfolioCarouselMain(props, ref) {
           >
             {item.title}
           </Link>
-          <h4 className="text-[13px] mb-[3rem] break-words">{item.desc}</h4>
+          <h4 className="text-[13px] mb-[3rem] break-words">
+            Major tools used in builing the project: {item.desc}
+          </h4>
         </div>
       </div>
     </div>
