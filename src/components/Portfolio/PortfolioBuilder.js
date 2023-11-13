@@ -6,6 +6,7 @@ import PortfolioCarousel from "./portfolioCarousel";
 import Image from "next/image";
 import useOnScreen from "../hooks/hooks";
 import { useImageSelector } from "../hooks/imagePicker";
+import Link from "next/link";
 function PortfolioBuilder() {
   const Portfolioref = useRef(null);
   const PortfolioIsvisible = useOnScreen(Portfolioref);
@@ -72,13 +73,17 @@ function PortfolioBuilder() {
               className="details text-[white]"
             >
               <div className="iconDrop relative top-[-100px] ease-in-out duration-[1.5s]">
-                <div className="absolute flex items-center justify-center top-[40px] left-8 border rounded-full px-3 py-3">
+                <Link
+                  href={item.link}
+                  title="Click to view live page"
+                  className="absolute z-10 group hover:bg-[#16c0f0] bg-transparent transition duration-[1s] ease-in-out flex items-center justify-center top-[40px] left-8 border rounded-full px-3 py-3"
+                >
                   <div className="dropLine absolute top-[-40px] left-[50%] w-[1px] h-10 bg-white"></div>
-                  <FaLink />
-                </div>
+                  <FaLink className="relative group-hover:text-[red] z-50 " />
+                </Link>
               </div>
               <div
-                className="absolute right-0 left-0 m-auto w-2 h-2 top-0 bottom-0 text-[40px] cursor-pointer"
+                className="absolute right-0 left-0 m-auto w-2 hover:text-[red] h-2 top-0 bottom-0 text-[40px] cursor-pointer"
                 onClick={() => {
                   childRecentWorksRef.current.setGoTo(index);
                   childRecentWorksRef.current.setPopup(true);
@@ -88,7 +93,13 @@ function PortfolioBuilder() {
               </div>
               <div className="absolute recent-ctn-info bottom-[-50px] ease duration-[2s] left-8">
                 <h4>{item.title}</h4>
-                <h4>{item.category}</h4>
+                <Link
+                  href={item.link}
+                  title="Click to view live page"
+                  className="underline"
+                >
+                  Live Preview
+                </Link>
               </div>
             </div>
             <Image

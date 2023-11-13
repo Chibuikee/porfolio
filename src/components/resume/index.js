@@ -9,24 +9,25 @@ function Resume() {
   //   console.log("intersectingresume", isvisible);
   const resumeDetails = [
     {
-      title: "Front End Developer",
-      date: "2020 - 2021",
-      type: "Cr8v Media",
-      details:
-        "Spearheaded the development of the company's website, which served as the primary online platform for their media content. Leveraged modern frontend technologies, including nextjs and popular frameworks such as tailwind css, to craft a fast, responsive and feature-rich website.",
-      position: "justify-center md:justify-start",
-    },
-    {
-      title: "Marketing Strategist",
-      date: "2020 - 2022",
+      title: "Frontend Developer",
+      date: "Aug.2022 - Dec.2022",
       type: "Musknet",
       details:
         "Led the end-to-end development of an e-commerce platform using Next.js,firebase and other state of the art tools. Implemented modern and responsive user interfaces that enhanced user engagement and improved overall site performance.",
-      position: "justify-center md:justify-end",
+      position: "justify-center md:justify-start",
     },
     {
-      title: "SEO Developer",
-      date: "2021 - 2021",
+      title: "Front End Developer",
+      date: "Jun.2023 - Jul.2023",
+      type: "Cr8v Media",
+      details:
+        "Spearheaded the development of the company's website, which served as the primary online platform for their media content. Leveraged modern frontend technologies, including nextjs and popular frameworks such as tailwind css, to craft a fast, responsive and feature-rich website.",
+      position: "justify-center md:justify-end",
+    },
+
+    {
+      title: "Frontend Developer",
+      date: "Sep.2023 - Oct.2023",
       type: "Techdia Academy",
       details:
         "Designed and developed the landing page of a tech academy. Created the contents for the site and made it seo friendly",
@@ -34,7 +35,7 @@ function Resume() {
     },
     {
       title: "Front End Developer",
-      date: "2023 - Till date",
+      date: "Aug.2023 - Till date",
       type: "Growth Club",
       details:
         "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together using nextjs 13 and other industry standard tools.",

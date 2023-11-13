@@ -15,6 +15,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import "react-slideshow-image/dist/styles.css";
 import RecentWorksCarouselButtons from "./portfolioCarouselButtons";
 import Image from "next/image";
+import Link from "next/link";
 
 function PortfolioCarouselMain(props, ref) {
   // console.log(pictureIndex, "hello");
@@ -100,7 +101,13 @@ function PortfolioCarouselMain(props, ref) {
         </Slide>
 
         <div className="text-center text-[white] p-[10px] hello ">
-          <h4 className="mb-[0.6rem]">{item.title}</h4>
+          <Link
+            href={item.link}
+            title="Click to view live page"
+            className="mb-[0.6rem] block"
+          >
+            {item.title}
+          </Link>
           <h4 className="text-[13px] mb-[3rem] break-words">{item.desc}</h4>
         </div>
       </div>

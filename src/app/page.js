@@ -9,6 +9,7 @@ import Resume from "@/components/resume";
 import Services from "@/components/services";
 import Sidebar from "@/components/sidebar";
 import Testimonials from "@/components/testimonials";
+import TestinPage from "@/components/testinPage";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,6 +38,7 @@ export default function Home() {
           <PortfolioBuilder />
           <Testimonials />
           <Contact />
+          {/* <TestinPage /> */}
         </div>
       </main>
     </>

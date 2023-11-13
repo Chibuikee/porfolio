@@ -10,7 +10,7 @@ function Services() {
       name: "FRONTEND DEVELOPMENT",
       icon: FaCode,
       details:
-        "Design-driven developer truning visions into captivating, user-friendly web experiences.",
+        "Design-driven developer turning visions into captivating and user-friendly web experiences.",
     },
     {
       name: "CO-FOUNDER",
@@ -22,7 +22,7 @@ function Services() {
       name: "UI/UX DESIGN",
       icon: FaPencilRuler,
       details:
-        "Crafting delightful digital experiences, ensuring seamless user journeys",
+        "Crafting delightful digital experiences and ensuring seamless user journeys",
     },
     {
       name: "BACKEND DEVELOPMENT",
