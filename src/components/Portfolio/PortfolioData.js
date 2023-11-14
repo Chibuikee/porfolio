@@ -2,6 +2,7 @@
 export const RWData = [
   {
     img: "/images/create.png",
+    img2: "/images/create.png",
     title: "cr8Vibe Media",
     link: "https://cr8vmedia.vercel.app/",
     // action:"",
@@ -10,6 +11,7 @@ export const RWData = [
   },
   {
     img: "/images/growthclub.png",
+    img2: "/images/growthclubsnap.png",
     title: "Growth Club",
     link: "https://growthclub.life",
     category: "Frontend",
@@ -17,6 +19,7 @@ export const RWData = [
   },
   {
     img: "/images/techdia.png",
+    img2: "/images/techdia.png",
     title: "Techdia Academy",
     link: "https://techdia.vercel.app/",
     category: "Frontend",
@@ -24,6 +27,7 @@ export const RWData = [
   },
   {
     img: "/images/beads.png",
+    img2: "/images/meritbeeds.png",
     title: "Merit beads",
     link: "https://meritbeeds.vercel.app/",
     category: "Fullstack",
@@ -31,6 +35,7 @@ export const RWData = [
   },
   {
     img: "/images/musknet2.png",
+    img2: "/images/musknet2.png",
     title: "Musknet",
     link: "https://musknet.vercel.app/",
     category: "Frontend",
@@ -38,6 +43,7 @@ export const RWData = [
   },
   {
     img: "/images/sergey-sokolov-CWFpNqjp_S4-unsplash.jpg",
+    img2: "/images/sergey-sokolov-CWFpNqjp_S4-unsplash.jpg",
     // img: {
     //   sm: "/images/sergey-sokolov-CWFpNqjp_S4-unsplash.jpg",
     //   md: "/images/sergey-sokolov-CWFpNqjp_S4-unsplash.jpg",

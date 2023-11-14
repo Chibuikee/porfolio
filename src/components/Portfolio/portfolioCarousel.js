@@ -90,12 +90,12 @@ function PortfolioCarouselMain(props, ref) {
             <div
               key={image.title}
               // className="h-full mx-auto w-full relative flex items-center "
-              className="max-h-[355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:h-[400px]"
+              className="max-h- [355px] mx-auto max-w-[700px] llg:max-w-[1000px] relative top-[50%] -translate-y-1/2 flex items-center xl:h-[400px]"
             >
               <Image
-                className="mx-auto  h-full w-[90%] object- contain"
+                className="mx-auto  h-full w-[90%] object-contain"
                 // className="xs:h-[455px]  pc:h-[755px] object-contain w-full mx-auto xs:w-[722px]  bg-[#000000]"
-                src={image.img}
+                src={image.img2}
                 // fill
                 width={1000}
                 height={1000}
