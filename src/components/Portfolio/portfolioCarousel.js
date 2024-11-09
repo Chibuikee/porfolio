@@ -114,7 +114,7 @@ function PortfolioCarouselMain(props, ref) {
             {item.title}
           </Link>
           <h4 className="text-[13px] mb-[3rem] break-words">
-            Major tools used in builing the project: {item.desc}
+            Major tools used in building the project: {item.desc}
           </h4>
         </div>
       </div>

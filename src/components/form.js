@@ -54,13 +54,14 @@ const Form = () => {
         })
         .then((responseData) => {
           toast.success("Sent Successfully!");
+          resetForm();
           console.log("POST request successful:", responseData);
         })
         .catch((error) => {
           console.error("POST request error:", error);
         });
 
-      resetForm();
+      // resetForm();
     } catch (error) {
       console.log(error);
     }
