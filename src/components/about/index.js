@@ -84,7 +84,10 @@ function About() {
                 </div>
               ))}
             </div>
-            <a download="Chibuike Ewenike CV" href={`/chibuike_ewenike_cv.pdf`}>
+            <a
+              download="Chibuike Ewenike CV"
+              href={`/chibuike_ewenike_software_cv.pdf`}
+            >
               <button className="py-3 text-base w-[160px] border-[#16c0f0] border bg-[transparent] text-[#16c0f0] rounded-[50px]">
                 Download CV
               </button>
