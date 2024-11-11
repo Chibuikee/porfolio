@@ -114,7 +114,7 @@ function Hero() {
           </Link>
           <a
             download="Chibuike Ewenike CV"
-            href={`/chibuike_ewenike_software_cv.pdf`}
+            href={`/Chibuike_Ewenike_Software_engineer_CV.pdf`}
           >
             <button
               download
