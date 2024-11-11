@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import SmallLoadingSpinner from "./smLoadingSpinner";
 
 const Form = () => {
+  const [loading, setloading] = useState(false);
   const formfields = [
     { name: "name", placeholder: "Your name*" },
     { name: "email", placeholder: "Your email*" },
@@ -38,7 +40,8 @@ const Form = () => {
       // setUserInfo(values);
       // console.log(values);
       const url = "https://techdiaserver.onrender.com/api/send-enquiries"; // Replace with your API endpoint
-
+      console.log("This is for sending it");
+      setloading(true);
       fetch(url, {
         method: "POST",
         headers: {
@@ -48,16 +51,19 @@ const Form = () => {
       })
         .then((response) => {
           if (!response.ok) {
+            setloading(false);
             throw new Error("Network response was not ok");
           }
           return response.json(); // Parse the response as JSON
         })
         .then((responseData) => {
           toast.success("Sent Successfully!");
+          setloading(false);
           resetForm();
           console.log("POST request successful:", responseData);
         })
         .catch((error) => {
+          setloading(false);
           console.error("POST request error:", error);
         });
 
@@ -151,9 +157,9 @@ const Form = () => {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="bg-[#fb3e3e] text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#fb3e3e] text-white w-[135px] h-[40px] py-2 px-4 rounded relative z-0 focus:outline-none focus:shadow-outline"
                   >
-                    Send Message
+                    {loading ? <SmallLoadingSpinner /> : "Send Message"}
                   </button>
                 </div>
               </form>
