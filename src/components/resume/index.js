@@ -93,9 +93,9 @@ function Resume() {
                   </h3>
                   <p className="text-[14px] px-[20px] pb-[15px] leading-[1.8rem] font-normal font-open_Sans ">
                     {item.details}
-                    <p className="mt-[10px] font-semibold text-[#16c0f0]">
+                    <span className="mt-[10px] font-semibold text-[#16c0f0]">
                       Tech: {item.tech}
-                    </p>
+                    </span>
                   </p>
                 </div>
               </div>
