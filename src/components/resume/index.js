@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { useRef } from "react";
 import useOnScreen from "../hooks/hooks";
 import { FcCalendar } from "react-icons/fc";
@@ -9,37 +8,29 @@ function Resume() {
   //   console.log("intersectingresume", isvisible);
   const resumeDetails = [
     {
-      title: "Frontend Developer",
-      date: "Aug.2022 - Dec.2022",
-      type: "Musknet",
+      title: "Software Engineer",
+      date: "2024 - Present",
+      type: "Lexanalytics",
       details:
-        "Led the end-to-end development of an e-commerce platform using Next.js,firebase and other state of the art tools. Implemented modern and responsive user interfaces that enhanced user engagement and improved overall site performance.",
+        "Designed and implemented metadata extraction algorithms for parsing law reports. Maintained enterprise-grade authentication systems and contributed to legal research tools. Worked on contract drafting and automation tools, enabling structured document generation. Tech: Python, FastAPI/Django, PostgreSQL, React, TypeScript",
       position: "justify-center md:justify-start",
     },
     {
-      title: "Front End Developer",
-      date: "Jun.2023 - Jul.2023",
-      type: "Cr8v Media",
+      title: "Backend Engineer",
+      date: "June 2025 - July 2025",
+      type: "BrainzCode",
       details:
-        "Spearheaded the development of the company's website, which served as the primary online platform for their media content. Leveraged modern frontend technologies, including nextjs and popular frameworks such as tailwind css, to craft a fast, responsive and feature-rich website.",
+        "Built Python-based backend services for AI-powered applications. Worked on voice cloning and voice synchronization systems. Implemented secure authentication mechanisms and handled DevOps tasks including server provisioning and production deployments. Tech: Python, AWS, Linux, AI models",
       position: "justify-center md:justify-end",
     },
 
     {
-      title: "Frontend Developer",
-      date: "Sep.2023 - Oct.2023",
-      type: "Techdia Academy",
+      title: "Fullstack Engineer",
+      date: "2023 - 2025",
+      type: "Solid Fiction",
       details:
-        "Designed and developed the landing page of a tech academy. Created the contents for the site and made it seo friendly",
+        "Built and maintained scalable e-learning platform supporting content delivery and enrollment workflows. Developed loan management system and worked on Nuvoro booking platform with Stripe payment integration. Delivered features across frontend and backend with focus on performance and reliability. Tech: Python, JavaScript, React, Stripe, PostgreSQL",
       position: "justify-center md:justify-start",
-    },
-    {
-      title: "Front End Developer",
-      date: "Aug.2023 - Till date",
-      type: "Growth Club",
-      details:
-        "Built and shipped a scalable and reliable community platform for founders and entrepreneurs to learn and grow together using nextjs 13 and other industry standard tools.",
-      position: "justify-center md:justify-end",
     },
   ];
   return (
@@ -54,9 +45,9 @@ function Resume() {
         </h3>
         <div className="pt-[40px] relative ">
           <div className=" timeline h- [700px]">
-            {resumeDetails.map((item) => (
+            {resumeDetails.map((item, idx) => (
               <div
-                key={item.title}
+                key={item.title + idx}
                 className={`dot before:top-[-30px] md:before:top-[10px] w-full ${item.position} flex relative`}
               >
                 <div className="mb-[45px] md:mb-[35px] text-[#c7c5c7] bg-[#2c3c4f] w-full md:w-[47%] border-[#374757] border-[3px] shadow-[0px_4px_5px_rgba(37,50,66,.7)] m-[3px]">

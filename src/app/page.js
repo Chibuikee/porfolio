@@ -10,7 +10,7 @@ import Services from "@/components/services";
 import Sidebar from "@/components/sidebar";
 import Testimonials from "@/components/testimonials";
 import TestinPage from "@/components/testinPage";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
@@ -28,18 +28,21 @@ export default function Home() {
     <>
       <ToastContainer />
       <main className="relative bg-[#263446]">
-        <Sidebar />
-        <Hero />
-        <Nav />
-        <div className="px-[30px] h- full lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
-          <About />
-          <Services />
-          <Resume />
-          <PortfolioBuilder />
-          <Testimonials />
-          <Contact />
-          {/* <TestinPage /> */}
-        </div>
+        <Suspense>
+          {" "}
+          <Sidebar />
+          <Hero />
+          <Nav />
+          <div className="px-[30px] h- full lg:px-[15px] md:w-[750px] relative pc:w-[970px] xl:w-[1170px] mx-auto">
+            <About />
+            <Services />
+            <Resume />
+            <PortfolioBuilder />
+            <Testimonials />
+            <Contact />
+            {/* <TestinPage /> */}
+          </div>
+        </Suspense>
       </main>
     </>
   );

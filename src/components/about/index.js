@@ -12,11 +12,11 @@ function About() {
   //   console.log("intersectingAbout", isvisible);
 
   const bio = [
-    { name: "Name", value: "Chibuike Ewenike" },
+    { name: "Name", value: "Chibuike Sopuruchukwu Ewenike" },
     { name: "Title", value: "Mr" },
     { name: "Phone", value: "+234 9032125576" },
-    { name: "Address", value: "Apapa, Lagos, Nigeria" },
-    { name: "Website", value: "https://github.com/Chibuikee" },
+    { name: "Address", value: " Lagos, Nigeria" },
+    { name: "Github", value: "https://github.com/Chibuikee" },
     { name: "Email", value: "sopewenike@yahoo.com" },
   ];
   return (
@@ -49,25 +49,28 @@ function About() {
               I am Chibuike Ewenike
             </h3>
             <p className="text-[#16c0f0] text-base font-semibold mb-[15px] tracking-[.5px] leading-[19.2px]">
-              I am a Full-Stack Developer
+              Software Engineer | Backend & Fullstack | Cloud & AI Systems
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] ">
-              I&#39;m an innovative and adaptable front-end developer with 2
-              years of experience in creating exceptional and scalable web
-              interfaces. Proficient in NextJS, React, TypeScript, JavaScript,
-              NodeJs, ExpressJs, MongoDb, Tailwind CSS, Firebase, Git, and
-              Redux, I thrive in dynamic environments.
+              Highly adaptable Software Engineer with strong expertise in Python
+              and JavaScript-based backend systems, cloud deployments, and
+              fullstack product development. Proven experience building and
+              maintaining production-grade SaaS platforms, including AI-driven
+              systems, e-commerce, e-learning platforms, legal-tech, financial,
+              and booking applications. Comfortable owning features end-to-end
+              from system design and API development to cloud deployment and
+              performance optimization.
             </p>
             <p className="text-[#c7c5c7] pb-[10px] leading-[1.8rem] font-normal tracking-[.3px] border-b-[1px] border-solid border-[#374757]">
-              I&#39;m passionate about startups, constantly learning, and
-              problem-solving. My goal is to partner with like-minded
-              individuals and companies to build captivating digital
-              experiences.{" "}
+              Proficient in Python, Go, JavaScript, TypeScript, React, Next.js,
+              FastAPI, Django, PostgreSQL, MongoDB, AWS, and Docker. Thrives in
+              fast-paced startup and scale-up environments with a passion for
+              building software that solves real-world problems.{" "}
               <Link
                 href={`/?${createQueryString("section", "contact")}#contactme`}
                 className="text-[green]"
               >
-                Let&#39;s connect and achieve together!
+                Let&#39;s connect and build something impactful!
               </Link>
             </p>
             {/* <div className="h-[2px] w-full "></div> */}
