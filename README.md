@@ -88,8 +88,8 @@ Lexanalytics is an AI-powered legal research and analytics software.
 - [Dancerapy](https://dancerapy.org/) — Dance fitness video streaming platform
 - [Nuvoro](https://nuvoro.net) — Appointment booking & payment system for service businesses
 - [Stalwartblue](https://opticap.stalwartblue.com/) — Enterprise capital & funding management portal to loans.
-- [GrowthClub](https://growthclub.life) — Enterprise capital & funding management portal
+- [GrowthClub](https://growthclub.life) — Enterprise capital, Life Style & funding management portal.
 
 ## EDUCATION
-- University of Lagos — LLB
 - Nigerian Law School — BL
+- University of Lagos — LLB
