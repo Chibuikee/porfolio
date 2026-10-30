@@ -1,0 +1,134 @@
+---
+import '@/styles/global.css';
+import { profile, summary, skills, education, experience, flagships } from '@/data/cv';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD nodes for this page, merged into the one @graph with the WebSite and Person nodes. */
+  jsonLd?: Record<string, unknown>[];
+  ogType?: 'website' | 'article' | 'profile';
+}
+
+const { title, description, jsonLd = [], ogType = 'profile' } = Astro.props;
+const site = Astro.site!;
+// With build.format 'file' the home page's pathname can come through as /index(.html).
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/(^|\/)index$/, '/'), site).href;
+const ogImage = new URL('/og.png', site).href;
+const [givenName, additionalName, familyName] = profile.fullName.split(' ');
+
+// Current roles become worksFor / founder, linked to the product's own site
+// where a case study exists, so search engines can tie the name to the work.
+const current = experience.filter((r) => r.period.includes('Present'));
+const org = (r: (typeof experience)[number]) => {
+  const flagship = flagships.find((f) => f.slug === r.project);
+  return { '@type': 'Organization', name: r.company, ...(flagship && { url: flagship.url }) };
+};
+
+const person = {
+  '@type': 'Person',
+  '@id': `${site.origin}/#person`,
+  name: profile.name,
+  givenName,
+  additionalName,
+  familyName,
+  alternateName: [profile.fullName, 'Chibuike S. Ewenike'],
+  jobTitle: 'Software Engineer',
+  disambiguatingDescription: profile.headline,
+  description: summary,
+  url: `${site.origin}/`,
+  mainEntityOfPage: `${site.origin}/`,
+  image: { '@type': 'ImageObject', url: new URL('/chibuike-ewenike.jpg', site).href, width: 800, height: 1000, caption: profile.name },
+  email: `mailto:${profile.email}`,
+  telephone: profile.phone.replace(/\s/g, ''),
+  address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressRegion: 'Lagos', addressCountry: 'NG' },
+  homeLocation: { '@type': 'Place', name: 'Lagos, Nigeria' },
+  hasOccupation: [
+    { '@type': 'Occupation', name: 'Software Engineer', occupationLocation: { '@type': 'City', name: 'Lagos' }, skills: skills.flatMap((g) => g.items).slice(0, 20).join(', ') },
+    { '@type': 'Occupation', name: 'Barrister and Solicitor of the Supreme Court of Nigeria' },
+  ],
+  worksFor: current.map(org),
+  founder: current.filter((r) => r.title.includes('Founder')).map(org),
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Lagos', address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' } },
+  hasCredential: education.map((e) => ({ '@type': 'EducationalOccupationalCredential', name: e.title, recognizedBy: { '@type': 'Organization', name: e.place } })),
+  knowsAbout: skills.flatMap((g) => g.items).slice(0, 40),
+  sameAs: Object.values(profile.links),
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${site.origin}/#website`,
+  url: `${site.origin}/`,
+  name: `${profile.name}, Software Engineer`,
+  alternateName: 'bytealpha.online',
+  inLanguage: 'en',
+  author: { '@id': person['@id'] },
+  publisher: { '@id': person['@id'] },
+};
+
+const ld = { '@context': 'https://schema.org', '@graph': [website, person, ...jsonLd] };
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="author" content={profile.fullName} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#0d1828" />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="en_GB" />
+    {ogType === 'profile' && <meta property="profile:first_name" content={givenName} />}
+    {ogType === 'profile' && <meta property="profile:last_name" content={familyName} />}
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name}, ${profile.headline}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@sopsy_c" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Plain-text summary for AI assistants" />
+    {Object.values(profile.links).map((href) => <link rel="me" href={href} />)}
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <slot name="head" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body class="grain">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-signal focus:px-4 focus:py-2 focus:text-ink-deep">Skip to content</a>
+    <slot />
+    <script>
+      // One observer for every [data-reveal] element on the page.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px' },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

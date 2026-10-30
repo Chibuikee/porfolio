@@ -1,0 +1,211 @@
+/* Only the axes in use: Bricolage weight + width, Newsreader weight (+ italic). */
+@import '@fontsource-variable/bricolage-grotesque/wdth.css';
+@import '@fontsource-variable/newsreader/wght.css';
+@import '@fontsource-variable/newsreader/wght-italic.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+@import 'tailwindcss';
+
+/*
+  Tokens. Ink-navy ground, one signal colour carried over from the old site
+  (#16c0f0) for anything live or interactive, and brass for the legal thread
+  (exhibit marks, the Bar call). Display: Bricolage Grotesque, narrowed. Body:
+  Newsreader. Mono only inside the terminal and the system graph.
+*/
+@theme {
+  --color-ink: #0d1828;
+  --color-ink-deep: #091220;
+  --color-panel: #13233a;
+  --color-line: #233e5c;
+  --color-signal: #16c0f0;
+  --color-signal-dim: #0f7fa3;
+  --color-brass: #e8b04b;
+  --color-paper: #e6edf5;
+  --color-muted: #9bb0c6;
+
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale: a 1.25 ratio from an 18px body, plus the outsized name. */
+  --text-step--1: 0.9rem;
+  --text-step-0: 1.125rem;
+  --text-step-1: 1.4rem;
+  --text-step-2: 1.75rem;
+  --text-step-3: 2.2rem;
+  --text-step-4: clamp(2.2rem, 5vw, 3.4rem);
+  --text-name: clamp(3.4rem, 13vw, 9.5rem);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-serif);
+    font-size: var(--text-step-0);
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: 1.1;
+    font-weight: 650;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-ink-deep);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+}
+
+@layer components {
+  /* Page column. Prose inside it is held to ~70ch by .measure. */
+  .wrap {
+    width: min(100% - 2rem, 72rem);
+    margin-inline: auto;
+  }
+  @media (min-width: 48rem) {
+    .wrap {
+      width: min(100% - 4rem, 72rem);
+    }
+  }
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* Section heading: the display face, with the section's job in a quiet serif line under it. */
+  .section-title {
+    font-size: var(--text-step-4);
+    letter-spacing: -0.01em;
+    font-stretch: 88%;
+  }
+  .section-lede {
+    color: var(--color-muted);
+    font-size: var(--text-step-0);
+    margin-top: 0.75rem;
+    max-width: 52ch;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.8rem 1.3rem;
+    border-radius: 999px;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      translate 0.25s var(--ease-out-quart);
+  }
+  .btn-primary {
+    background: var(--color-signal);
+    color: var(--color-ink-deep);
+  }
+  .btn-primary:hover {
+    background: #4fd3f7;
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-paper);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-signal);
+    color: var(--color-signal);
+  }
+
+  .chip {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1;
+    padding: 0.4rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  .link {
+    color: var(--color-signal);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-signal) 40%, transparent);
+    transition: text-decoration-color 0.2s;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /*
+    Reveal: elements marked [data-reveal] start lowered and transparent only once
+    the reveal script has run (html.js), so no-JS visitors and crawlers always
+    see content.
+  */
+  .js [data-reveal] {
+    opacity: 0;
+    translate: 0 1.25rem;
+    transition:
+      opacity 0.7s var(--ease-out-quart),
+      translate 0.7s var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Grain: one fixed SVG-noise layer over everything, very faint. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    translate: none;
+  }
+}

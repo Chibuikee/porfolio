@@ -1,0 +1,178 @@
+---
+import HeroGraph from './HeroGraph.astro';
+import Terminal from './Terminal.astro';
+import Icon from './icons/Icon.astro';
+import { profile } from '@/data/cv';
+
+// What the typed line cycles through: one phrase per flagship project.
+const building = [
+  'a pharmacy POS that keeps selling offline',
+  'scholarship matching with vector search and LLMs',
+  'live GPS tracking for a US trucking fleet',
+  'retrieval tools for legal research',
+];
+---
+
+<section id="top" class="hero relative isolate overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
+  <div class="aurora" aria-hidden="true"></div>
+
+  <div class="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
+    <div>
+      <p class="hero-meta font-display text-muted">
+        <Icon name="pin" size={16} class="inline -mt-1 text-signal" />
+        {profile.location}
+      </p>
+
+      <h1 class="name mt-5 text-paper">
+        <span class="block">Chibuike</span>
+        <span class="block surname">Ewenike</span>
+      </h1>
+
+      <p class="mt-6 max-w-[34ch] text-step-1 leading-snug text-paper">
+        Backend and full-stack engineer building AI systems, multi-tenant SaaS and the infrastructure they run on.
+      </p>
+
+      <p class="typed mt-5 font-display text-muted" data-typed={JSON.stringify(building)}>
+        <span>Currently shipping </span><span class="sr-only">{building.join('; ')}.</span><span class="typed-text text-signal" aria-hidden="true">{building[0]}</span><span class="typed-caret" aria-hidden="true"></span>
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a href="#work" class="btn btn-primary" data-magnetic>See the work</a>
+        <a href={profile.cv} download class="btn btn-ghost" data-magnetic>
+          <Icon name="download" size={18} /> Download CV
+        </a>
+        <ul class="ml-1 flex items-center gap-1" aria-label="Profiles">
+          <li><a href={profile.links.github} class="social" rel="me noopener" target="_blank"><Icon name="github" size={20} label="GitHub" /></a></li>
+          <li><a href={profile.links.linkedin} class="social" rel="me noopener" target="_blank"><Icon name="linkedin" size={20} label="LinkedIn" /></a></li>
+          <li><a href={profile.links.x} class="social" rel="me noopener" target="_blank"><Icon name="x" size={18} label="X" /></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="relative">
+      <HeroGraph />
+      <div class="term-slot relative mt-2 sm:ml-auto sm:max-w-[23rem] lg:-mt-6 lg:mr-auto lg:ml-[-2.5rem]">
+        <Terminal />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .name {
+    font-size: var(--text-name);
+    font-weight: 780;
+    font-stretch: 75%;
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+  }
+  /* Same face and width, opposite end of the weight axis. */
+  .surname {
+    font-weight: 260;
+    color: var(--color-muted);
+  }
+  /* Load moment: each line rises out of its own baseline mask. */
+  :global(.js) .name > span {
+    clip-path: inset(0 -0.1em -0.1em 0);
+  }
+  :global(.js) .name > span {
+    animation: rise 0.9s var(--ease-out-quart) both;
+  }
+  :global(.js) .name > span + span {
+    animation-delay: 0.12s;
+  }
+  @keyframes rise {
+    from {
+      translate: 0 0.9em;
+      opacity: 0;
+    }
+  }
+  .typed {
+    font-size: 1.05rem;
+    min-height: 3.2em;
+  }
+  .typed-caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    margin-left: 2px;
+    vertical-align: -0.2em;
+    background: var(--color-signal);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .social {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    color: var(--color-muted);
+    transition: color 0.2s;
+  }
+  .social:hover {
+    color: var(--color-signal);
+  }
+
+  /* Two slow light pools behind the hero. */
+  .aurora {
+    position: absolute;
+    inset: -20% -10% auto;
+    height: 120%;
+    z-index: -1;
+    background:
+      radial-gradient(40% 35% at 75% 30%, color-mix(in oklab, var(--color-signal) 18%, transparent), transparent 70%),
+      radial-gradient(30% 30% at 20% 70%, color-mix(in oklab, var(--color-brass) 9%, transparent), transparent 70%);
+    filter: blur(20px);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent 85%);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    to {
+      transform: translate3d(-4%, 3%, 0) scale(1.08);
+    }
+  }
+</style>
+
+<script>
+  // Typed line: delete, then type the next phrase.
+  const el = document.querySelector<HTMLElement>('[data-typed]');
+  if (el && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const phrases: string[] = JSON.parse(el.dataset.typed!);
+    const out = el.querySelector<HTMLElement>('.typed-text')!;
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    (async () => {
+      let i = 0;
+      for (;;) {
+        await sleep(2600);
+        const current = phrases[i];
+        for (let n = current.length; n >= 0; n--) {
+          out.textContent = current.slice(0, n);
+          await sleep(18);
+        }
+        i = (i + 1) % phrases.length;
+        for (const ch of phrases[i]) {
+          out.textContent += ch;
+          await sleep(45);
+        }
+      }
+    })();
+  }
+
+  // Buttons lean a few pixels toward the pointer.
+  if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((b) => {
+      b.addEventListener('pointermove', (e) => {
+        const r = b.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.18;
+        const y = (e.clientY - r.top - r.height / 2) * 0.3;
+        b.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+      b.addEventListener('pointerleave', () => (b.style.translate = ''));
+    });
+  }
+</script>

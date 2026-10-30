@@ -1,0 +1,21 @@
+# Chibuike Ewenike
+
+> Software engineer (backend, full-stack, AI systems and AI agents) based in Lagos, Nigeria, working remotely. 3+ years building and running production SaaS in Python (FastAPI, Django), Go and TypeScript (React, Next.js, Node.js). Also a lawyer: called to the Nigerian Bar in July 2025.
+
+Contact: sopewenike@yahoo.com, +234 903 212 5576, https://www.linkedin.com/in/chibuike-ewenike/, https://github.com/Chibuikee
+
+## Case studies
+
+- [QuickPharms](https://www.bytealpha.online/projects/quickpharms): founder and lead engineer. Multi-tenant pharmacy SaaS and offline-first POS; Go + PostgreSQL row-level security, ~275 REST endpoints, React PWA, HL7 FHIR R5. Live at https://quickpharms.com
+- [Eureka](https://www.bytealpha.online/projects/eureka): lead full-stack engineer. AI scholarship matching: eligibility gates, dense retrieval in Qdrant (nDCG 0.918 vs 0.844 for hybrid BM25/RRF), LLM scoring into three fit tiers; FastAPI, Celery, Stripe.
+- [Green Rhino](https://www.bytealpha.online/projects/green-rhino): full-stack engineer. Trucking fleet management with live GPS tracking over SSE; Go, React PWA, Oracle Cloud.
+- [Lexanalytics](https://www.bytealpha.online/projects/lexanalytics): software engineer. AI legal research, analytics and contract automation; metadata extraction, Haystack retrieval.
+
+## Other work
+
+DanceDeal Training Foundation (dancedeal.org), Dancerapy (dancerapy.org), Nuvoro (nuvoro.net), StalwartBlue (opticap.stalwartblue.com), BrainzCode, Growthclub (growthclub.life).
+
+## CV
+
+- [Full CV as text](https://www.bytealpha.online/llms-full.txt): every role, skill and credential, generated from the same data as the site
+- [CV (PDF)](https://www.bytealpha.online/Chibuike_Ewenike_CV.pdf)

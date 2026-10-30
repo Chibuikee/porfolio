@@ -1,0 +1,126 @@
+---
+import { platformCount } from '@/data/cv';
+
+// Every line is in the HTML, so crawlers and no-JS visitors read the whole
+// thing. With JS, the lines are hidden and typed out once the card is in view.
+type Line = { kind: 'cmd' | 'out' | 'ok'; text: string; value?: string };
+const lines: Line[] = [
+  { kind: 'cmd', text: 'whoami' },
+  { kind: 'out', text: 'software engineer, barrister' },
+  { kind: 'cmd', text: 'cat shipped.txt' },
+  { kind: 'out', text: 'platforms', value: `${platformCount} in production` },
+  { kind: 'out', text: 'endpoints', value: '~275 in one Go API' },
+  { kind: 'out', text: 'retrieval', value: 'nDCG 0.918 vs 0.844' },
+  { kind: 'cmd', text: 'deploy quickpharms --prod' },
+  { kind: 'ok', text: 'live at quickpharms.com' },
+];
+---
+
+<figure class="term" data-term aria-label="Terminal summary">
+  <figcaption class="term-bar">~/chibuike</figcaption>
+  <div class="term-body">
+    {
+      lines.map((l) => (
+        <div class:list={['term-line', l.kind]} data-line>
+          {l.kind === 'cmd' && <span class="prompt" aria-hidden="true">$&nbsp;</span>}
+          {l.kind === 'ok' && <span class="tick" aria-hidden="true">✓&nbsp;</span>}
+          <span data-text>{l.value ? l.text.padEnd(11) : l.text}</span>
+          {l.value && <span class="val">{l.value}</span>}
+        </div>
+      ))
+    }
+    <span class="caret" aria-hidden="true"></span>
+  </div>
+</figure>
+
+<style>
+  .term {
+    background: color-mix(in oklab, var(--color-ink-deep) 92%, transparent);
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
+  .term-bar {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .term-body {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    padding: 0.8rem 1rem 1rem;
+    color: var(--color-muted);
+    min-height: 15.2em; /* holds the height while lines type in */
+  }
+  .term-line {
+    white-space: pre-wrap;
+  }
+  .cmd {
+    color: var(--color-paper);
+  }
+  .prompt {
+    color: var(--color-signal);
+  }
+  .val {
+    color: var(--color-paper);
+  }
+  .ok {
+    color: #5ee0a0;
+  }
+  .caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    vertical-align: -0.15em;
+    background: var(--color-signal);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  :global(.js) .term-line.pending {
+    display: none;
+  }
+</style>
+
+<script>
+  const term = document.querySelector<HTMLElement>('[data-term]');
+  if (term && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lines = [...term.querySelectorAll<HTMLElement>('[data-line]')];
+    const texts = lines.map((l) => l.querySelector<HTMLElement>('[data-text]')!);
+    const full = texts.map((t) => t.textContent ?? '');
+    lines.forEach((l) => l.classList.add('pending'));
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const run = async () => {
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        line.classList.remove('pending');
+        if (line.classList.contains('cmd')) {
+          texts[i].textContent = '';
+          await sleep(350);
+          for (const ch of full[i]) {
+            texts[i].textContent += ch;
+            await sleep(38 + Math.random() * 40);
+          }
+          await sleep(250);
+        } else {
+          await sleep(140);
+        }
+      }
+    };
+    new IntersectionObserver((entries, obs) => {
+      if (entries[0].isIntersecting) {
+        obs.disconnect();
+        setTimeout(run, 900);
+      }
+    }).observe(term);
+  }
+</script>

@@ -1,0 +1,19 @@
+# Cloudflare Pages response headers. scripts/csp.mjs copies this file into
+# dist/ after the build and fills the placeholder in script-src with the sha256
+# of every inline <script> Astro emitted, so the CSP never needs
+# 'unsafe-inline' for scripts. Edit here, not in dist/.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' __SCRIPT_HASHES__ https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/Chibuike_Ewenike_CV.pdf
+  Cache-Control: public, max-age=3600
+  Content-Disposition: inline; filename="Chibuike_Ewenike_CV.pdf"

@@ -1,0 +1,552 @@
+---
+// A till receipt prints line by line, the connection drops, the sale and its
+// stock changes queue in the outbox, then the connection returns and the queue
+// drains to the server. One 12s CSS loop; the static (reduced-motion) state is
+// the offline moment: receipt printed, three items queued.
+const W = 220;
+const zig = Array.from({ length: 20 }, (_, i) => `L${244 - (i + 1) * 11} ${i % 2 === 0 ? 292 : 284}`).join(' ');
+const receipt = `M24 20 H244 V284 ${zig} Z`;
+const arcs = [8, 14, 20].map((r) => {
+  const d = r * 0.707;
+  return `M${298 - d} ${58 - d} A${r} ${r} 0 0 1 ${298 + d} ${58 - d}`;
+});
+---
+
+<div class="art" data-art-qp>
+  <svg viewBox="0 0 480 320" role="img" aria-labelledby="qp-art-title qp-art-desc">
+    <title id="qp-art-title">QuickPharms till going offline and syncing</title>
+    <desc id="qp-art-desc">
+      A till receipt prints with three items and a split payment of cash and transfer. The connection drops, the sale and its
+      stock changes queue in an outbox, then the connection returns and the queued entries sync to the server.
+    </desc>
+    <defs>
+      <pattern id="qp-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#233e5c"></circle>
+      </pattern>
+      <radialGradient id="qp-fade" cx="50%" cy="50%" r="62%">
+        <stop offset="0.45" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </radialGradient>
+      <mask id="qp-mask"><rect width="480" height="320" fill="url(#qp-fade)"></rect></mask>
+    </defs>
+    <rect width="480" height="320" fill="url(#qp-dots)" mask="url(#qp-mask)"></rect>
+
+    <!-- The receipt -->
+    <g class="receipt">
+      <path d={receipt} class="paper"></path>
+      <g class="ink" font-family="var(--font-mono)">
+        <text x="40" y="50" class="rc-head">QuickPharms</text>
+        <text x="40" y="67" class="rc-sub">Till sale</text>
+        <path d="M40 78 H228" class="rule"></path>
+
+        <text x="40" y="99">Paracetamol x2</text>
+        <text x="228" y="99" text-anchor="end">700</text>
+        <text x="40" y="121">Amoxicillin 500</text>
+        <text x="228" y="121" text-anchor="end">2,200</text>
+        <text x="40" y="143">Vitamin C</text>
+        <text x="228" y="143" text-anchor="end">1,250</text>
+        <path d="M40 156 H228" class="rule"></path>
+
+        <text x="40" y="178" class="rc-strong">Total</text>
+        <text x="228" y="178" text-anchor="end" class="rc-strong">₦4,150</text>
+        <path d="M40 192 H228" class="rule"></path>
+
+        <text x="40" y="214">Cash</text>
+        <text x="228" y="214" text-anchor="end">₦2,000</text>
+        <text x="40" y="234">Transfer</text>
+        <text x="228" y="234" text-anchor="end">₦2,150</text>
+      </g>
+      <!-- Paper cover that retracts in steps: the print head. -->
+      <rect x="24" y="30" width={W} height="216" class="cover"></rect>
+      <text x="134" y="266" text-anchor="middle" class="saved">Saved on this device</text>
+    </g>
+    <rect x="12" y="12" width="244" height="12" rx="6" class="slot"></rect>
+
+    <!-- Connection state -->
+    <rect x="272" y="24" width="184" height="48" rx="24" class="pill"></rect>
+    <g class="wifi">
+      {arcs.map((d) => <path d={d} class="arc" />)}
+      <circle cx="298" cy="58" r="2.6" class="wifi-dot"></circle>
+    </g>
+    <path d="M284 38 L312 66" class="slash" pathLength="1"></path>
+    <g class="state" font-family="var(--font-display)">
+      <text x="328" y="53" class="st st-online">Online</text>
+      <text x="328" y="53" class="st st-offline">Offline</text>
+      <text x="328" y="53" class="st st-sync">Syncing</text>
+    </g>
+
+    <!-- Outbox -->
+    <rect x="272" y="92" width="184" height="124" rx="10" class="card"></rect>
+    <text x="288" y="114" class="card-title">Outbox</text>
+    <text x="440" y="114" text-anchor="end" class="badge">3 queued</text>
+    <g font-family="var(--font-mono)">
+      <g class="entry q1"><rect x="284" y="126" width="160" height="22" rx="5" class="entry-box"></rect><circle cx="296" cy="137" r="3" class="entry-dot"></circle><text x="308" y="141">Sale</text></g>
+      <g class="entry q2"><rect x="284" y="152" width="160" height="22" rx="5" class="entry-box"></rect><circle cx="296" cy="163" r="3" class="entry-dot"></circle><text x="308" y="167">Stock change</text></g>
+      <g class="entry q3"><rect x="284" y="178" width="160" height="22" rx="5" class="entry-box"></rect><circle cx="296" cy="189" r="3" class="entry-dot"></circle><text x="308" y="193">Stock change</text></g>
+    </g>
+
+    <!-- Server -->
+    <rect x="272" y="240" width="184" height="50" rx="10" class="pulse"></rect>
+    <rect x="272" y="240" width="184" height="50" rx="10" class="card"></rect>
+    <g class="server-icon">
+      <rect x="288" y="254" width="26" height="9" rx="3"></rect>
+      <rect x="288" y="267" width="26" height="9" rx="3"></rect>
+      <circle cx="296" cy="258.5" r="1.4" class="led"></circle>
+      <circle cx="296" cy="271.5" r="1.4" class="led"></circle>
+    </g>
+    <text x="326" y="271" class="card-title">Server</text>
+    <text x="440" y="271" text-anchor="end" class="badge synced">Synced</text>
+  </svg>
+</div>
+
+<style>
+  .art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .paper {
+    fill: var(--color-paper);
+    filter: drop-shadow(0 10px 16px rgb(5 10 20 / 0.45));
+  }
+  .ink text {
+    font-size: 11.5px;
+    fill: var(--color-ink);
+  }
+  .ink .rc-head {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    font-stretch: 85%;
+  }
+  .ink .rc-sub {
+    fill: #54677e;
+    font-size: 10.5px;
+  }
+  .ink .rc-strong {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .rule {
+    stroke: #54677e;
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0.6;
+  }
+  .cover {
+    fill: var(--color-paper);
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    transform: scaleY(0);
+  }
+  .saved {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--color-signal-dim);
+  }
+  .slot {
+    fill: var(--color-ink-deep);
+    stroke: var(--color-line);
+    stroke-width: 1.25;
+  }
+
+  .pill {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1.5;
+  }
+  .arc {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .wifi-dot {
+    fill: var(--color-signal);
+  }
+  .wifi {
+    opacity: 0.28;
+  }
+  .slash {
+    fill: none;
+    stroke: var(--color-muted);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .st {
+    font-size: 17px;
+    font-weight: 600;
+    fill: var(--color-paper);
+    opacity: 0;
+  }
+  .st-offline {
+    opacity: 1;
+    fill: var(--color-muted);
+  }
+  .st-sync {
+    fill: var(--color-signal);
+  }
+
+  .card {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1.25;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    fill: var(--color-paper);
+  }
+  .badge {
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    font-weight: 500;
+    fill: var(--color-muted);
+  }
+  .badge.synced {
+    fill: var(--color-signal);
+    opacity: 0;
+  }
+  .entry-box {
+    fill: var(--color-ink);
+    stroke: var(--color-line);
+  }
+  .entry text {
+    font-size: 11.5px;
+    fill: var(--color-paper);
+  }
+  .entry-dot {
+    fill: var(--color-signal);
+  }
+  .server-icon rect {
+    fill: var(--color-ink);
+    stroke: var(--color-line);
+  }
+  .led {
+    fill: var(--color-signal-dim);
+  }
+  .pulse {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* One 12s loop. Everything is keyed to the same clock so the pause/resume
+     from the off-screen observer keeps the sequence in step. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cover {
+      animation: print 12s steps(8, end) infinite;
+    }
+    .receipt {
+      animation: receipt 12s linear infinite;
+    }
+    .saved {
+      animation: saved 12s linear infinite;
+    }
+    .wifi {
+      animation: wifi 12s linear infinite;
+    }
+    .slash {
+      animation: slash 12s linear infinite;
+    }
+    .pill {
+      animation: pill 12s linear infinite;
+    }
+    .st-online {
+      animation: s-online 12s linear infinite;
+    }
+    .st-offline {
+      animation: s-offline 12s linear infinite;
+    }
+    .st-sync {
+      animation: s-sync 12s linear infinite;
+    }
+    .badge:not(.synced) {
+      animation: badge 12s linear infinite;
+    }
+    .badge.synced {
+      animation: synced 12s linear infinite;
+    }
+    .q1 {
+      animation: q1 12s var(--ease-out-quart) infinite;
+    }
+    .q2 {
+      animation: q2 12s var(--ease-out-quart) infinite;
+    }
+    .q3 {
+      animation: q3 12s var(--ease-out-quart) infinite;
+    }
+    .pulse {
+      animation: pulse 12s ease-out infinite;
+    }
+    .led {
+      animation: led 12s linear infinite;
+    }
+  }
+
+  @keyframes print {
+    0%,
+    2% {
+      transform: scaleY(1);
+    }
+    26%,
+    96% {
+      transform: scaleY(0);
+    }
+    97%,
+    100% {
+      transform: scaleY(1);
+    }
+  }
+  @keyframes receipt {
+    0% {
+      opacity: 0;
+    }
+    2%,
+    93% {
+      opacity: 1;
+    }
+    96%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes saved {
+    0%,
+    27% {
+      opacity: 0;
+    }
+    31%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes wifi {
+    0%,
+    30% {
+      opacity: 1;
+    }
+    34%,
+    54% {
+      opacity: 0.28;
+    }
+    58%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slash {
+    0%,
+    30% {
+      stroke-dashoffset: 1;
+    }
+    35%,
+    54% {
+      stroke-dashoffset: 0;
+    }
+    57%,
+    100% {
+      stroke-dashoffset: 1;
+    }
+  }
+  @keyframes pill {
+    0%,
+    30% {
+      stroke: var(--color-signal-dim);
+    }
+    34%,
+    54% {
+      stroke: var(--color-line);
+    }
+    58%,
+    100% {
+      stroke: var(--color-signal-dim);
+    }
+  }
+  @keyframes s-online {
+    0%,
+    30% {
+      opacity: 1;
+    }
+    33%,
+    78% {
+      opacity: 0;
+    }
+    82%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes s-offline {
+    0%,
+    31% {
+      opacity: 0;
+    }
+    34%,
+    53% {
+      opacity: 1;
+    }
+    56%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes s-sync {
+    0%,
+    55% {
+      opacity: 0;
+    }
+    58%,
+    77% {
+      opacity: 1;
+    }
+    80%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes badge {
+    0%,
+    45% {
+      opacity: 0;
+    }
+    48%,
+    59% {
+      opacity: 1;
+    }
+    62%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes synced {
+    0%,
+    73% {
+      opacity: 0;
+    }
+    77%,
+    93% {
+      opacity: 1;
+    }
+    96%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes led {
+    0%,
+    74% {
+      fill: var(--color-signal-dim);
+    }
+    78%,
+    93% {
+      fill: var(--color-signal);
+    }
+    96%,
+    100% {
+      fill: var(--color-signal-dim);
+    }
+  }
+  /* Entries arrive top to bottom while offline, then drop to the server bottom first. */
+  @keyframes q1 {
+    0%,
+    35% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+    39%,
+    69% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    74% {
+      opacity: 0;
+      transform: translate(0, 104px);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+  }
+  @keyframes q2 {
+    0%,
+    40% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+    44%,
+    63% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    68% {
+      opacity: 0;
+      transform: translate(0, 80px);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+  }
+  @keyframes q3 {
+    0%,
+    45% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+    49%,
+    59% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    64% {
+      opacity: 0;
+      transform: translate(0, 56px);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-40px, 0);
+    }
+  }
+  @keyframes pulse {
+    0%,
+    60%,
+    66%,
+    72%,
+    100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    63%,
+    69%,
+    75% {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    65%,
+    71%,
+    77% {
+      opacity: 0;
+      transform: scale(1.1, 1.3);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-art-qp]').forEach((root) => {
+    const svg = root.querySelector('svg');
+    if (!svg || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Hold the loop while the illustration is off screen.
+    new IntersectionObserver(([e]) => {
+      for (const a of root.getAnimations({ subtree: true })) e.isIntersecting ? a.play() : a.pause();
+    }).observe(root);
+  });
+</script>

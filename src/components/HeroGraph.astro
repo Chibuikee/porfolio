@@ -1,0 +1,254 @@
+---
+// The hero's system diagram: the stack the flagship projects actually run on,
+// drawn as a live topology. Edges draw in once on load, then packets travel
+// them (SMIL <animateMotion>, paused by script under reduced motion).
+
+type Node = { id: string; label: string; x: number; y: number; tone?: 'brass' };
+const nodes: Node[] = [
+  { id: 'pwa', label: 'React PWA', x: 92, y: 56 },
+  { id: 'edge', label: 'Cloudflare', x: 300, y: 40 },
+  { id: 'go', label: 'Go API', x: 120, y: 196 },
+  { id: 'py', label: 'FastAPI', x: 396, y: 168 },
+  { id: 'pg', label: 'Postgres', x: 84, y: 340 },
+  { id: 'qd', label: 'Qdrant', x: 262, y: 306 },
+  { id: 'llm', label: 'LLM', x: 440, y: 340, tone: 'brass' },
+];
+const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+const width = (n: Node) => n.label.length * 8.6 + 36;
+
+const edges: [string, string][] = [
+  ['pwa', 'edge'],
+  ['edge', 'go'],
+  ['edge', 'py'],
+  ['go', 'pg'],
+  ['py', 'pg'],
+  ['py', 'qd'],
+  ['qd', 'llm'],
+  ['py', 'llm'],
+  ['go', 'llm'],
+];
+const curve = (a: Node, b: Node) => {
+  const my = (a.y + b.y) / 2;
+  return `M${a.x} ${a.y} C${a.x} ${my} ${b.x} ${my} ${b.x} ${b.y}`;
+};
+---
+
+<div class="graph-stage" data-graph>
+  <svg class="graph" viewBox="0 0 520 400" role="img" aria-labelledby="graph-title graph-desc">
+    <title id="graph-title">System diagram</title>
+    <desc id="graph-desc">
+      A React PWA served through Cloudflare talks to a Go API and a FastAPI service, backed by PostgreSQL, the Qdrant vector
+      database and an LLM, the stack behind QuickPharms, Eureka and Green Rhino.
+    </desc>
+    <defs>
+      <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#233e5c"></circle>
+      </pattern>
+      <radialGradient id="fade" cx="50%" cy="50%" r="60%">
+        <stop offset="0.5" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </radialGradient>
+      <mask id="fade-mask"><rect width="520" height="400" fill="url(#fade)"></rect></mask>
+      {edges.map(([a, b]) => <path id={`e-${a}-${b}`} d={curve(byId[a], byId[b])} />)}
+    </defs>
+
+    <rect width="520" height="400" fill="url(#dots)" mask="url(#fade-mask)"></rect>
+
+    <g class="edges" fill="none">
+      {
+        edges.map(([a, b], i) => (
+          <g style={`--i:${i}`}>
+            <use href={`#e-${a}-${b}`} class="edge-base" />
+            <use href={`#e-${a}-${b}`} class="edge-flow" />
+          </g>
+        ))
+      }
+    </g>
+
+    <g class="packets">
+      {
+        edges.map(([a, b], i) => (
+          <circle r="3.2" opacity="0" class:list={['packet', { brass: b === 'llm' }]}>
+            {/* Hidden until its motion begins; before that it would sit at the SVG origin. */}
+            <set attributeName="opacity" to="1" begin={`${1.2 + i * 0.35}s`} />
+            <animateMotion dur={`${2.6 + (i % 4) * 0.7}s`} begin={`${1.2 + i * 0.35}s`} repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.45 0 0.55 1">
+              <mpath href={`#e-${a}-${b}`} />
+            </animateMotion>
+          </circle>
+        ))
+      }
+    </g>
+
+    <g class="nodes">
+      {
+        nodes.map((n, i) => {
+          const w = width(n);
+          return (
+            <g class:list={['node', { brass: n.tone === 'brass' }]} style={`--i:${i}`} transform={`translate(${n.x - w / 2} ${n.y - 17})`}>
+              <rect width={w} height="34" rx="17" class="node-box" />
+              <circle cx="17" cy="17" r="4" class="node-dot" />
+              <circle cx="17" cy="17" r="4" class="node-ping" />
+              <text x="29" y="21.5" class="node-label">
+                {n.label}
+              </text>
+            </g>
+          );
+        })
+      }
+    </g>
+  </svg>
+</div>
+
+<style>
+  .graph-stage {
+    perspective: 900px;
+  }
+  .graph {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transform: rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+    transition: transform 0.6s var(--ease-out-quart);
+  }
+  .edge-base {
+    stroke: var(--color-line);
+    stroke-width: 1.5;
+  }
+  .edge-flow {
+    stroke: var(--color-signal-dim);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 10;
+    animation: flow 1.6s linear infinite;
+    opacity: 0.8;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+  .packet {
+    fill: var(--color-signal);
+    filter: drop-shadow(0 0 4px var(--color-signal));
+  }
+  .packet.brass {
+    fill: var(--color-brass);
+    filter: drop-shadow(0 0 4px var(--color-brass));
+  }
+  .node-box {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1.25;
+  }
+  .node-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--color-paper);
+  }
+  .node-dot,
+  .node-ping {
+    fill: var(--color-signal);
+  }
+  .node.brass .node-dot,
+  .node.brass .node-ping {
+    fill: var(--color-brass);
+  }
+  .node.brass .node-box {
+    stroke: color-mix(in oklab, var(--color-brass) 55%, var(--color-line));
+  }
+  .node-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ping 2.4s var(--ease-out-quart) infinite;
+    animation-delay: calc(var(--i) * 0.4s);
+  }
+  @keyframes ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    70%,
+    100% {
+      transform: scale(3.2);
+      opacity: 0;
+    }
+  }
+
+  /* Load sequence: edges draw, then nodes settle in. Runs once. */
+  .js .edge-base {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: draw 1.1s var(--ease-out-quart) forwards;
+    animation-delay: calc(0.15s + var(--i) * 0.08s);
+  }
+  .js .edge-flow {
+    opacity: 0;
+    animation:
+      flow 1.6s linear infinite,
+      appear 0.6s 1.3s forwards;
+  }
+  .js .node {
+    opacity: 0;
+    animation: node-in 0.5s var(--ease-out-quart) forwards;
+    animation-delay: calc(0.05s + var(--i) * 0.09s);
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes appear {
+    to {
+      opacity: 0.85;
+    }
+  }
+  @keyframes node-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .packets {
+      display: none;
+    }
+    .js .edge-base {
+      stroke-dashoffset: 0;
+    }
+    .js .edge-flow,
+    .js .node {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const stage = document.querySelector<HTMLElement>('[data-graph]');
+  const svg = stage?.querySelector('svg');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  if (stage && svg) {
+    if (reduce.matches) svg.pauseAnimations();
+
+    // Gentle tilt toward the pointer, on devices that have one.
+    if (matchMedia('(hover: hover)').matches && !reduce.matches) {
+      const hero = stage.closest('section') ?? stage;
+      hero.addEventListener('pointermove', (e) => {
+        const r = stage.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+        const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        svg.style.setProperty('--rx', `${(dx * 8).toFixed(2)}deg`);
+        svg.style.setProperty('--ry', `${(-dy * 6).toFixed(2)}deg`);
+      });
+      hero.addEventListener('pointerleave', () => {
+        svg.style.setProperty('--rx', '0deg');
+        svg.style.setProperty('--ry', '0deg');
+      });
+    }
+
+    // Stop the packets while the hero is off screen.
+    new IntersectionObserver(([e]) => {
+      if (reduce.matches) return;
+      e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations();
+    }).observe(stage);
+  }
+</script>

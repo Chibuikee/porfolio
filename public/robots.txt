@@ -1,0 +1,30 @@
+# Every crawler is welcome, including the ones that feed AI search and chat
+# answers. The named groups below spell that out for bots that look for their
+# own entry before falling back to *.
+
+User-agent: *
+Allow: /
+
+# OpenAI (ChatGPT search, browsing, training)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+# Anthropic (Claude search, browsing, training)
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+# Perplexity
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+# Google Gemini / AI Overviews, Apple Intelligence, Microsoft Copilot (via Bing)
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+# Others
+User-agent: CCBot
+User-agent: DuckAssistBot
+User-agent: meta-externalagent
+User-agent: MistralAI-User
+Allow: /
+
+Sitemap: https://www.bytealpha.online/sitemap-index.xml

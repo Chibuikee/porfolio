@@ -1,0 +1,309 @@
+---
+import { Image, Picture } from 'astro:assets';
+import portrait from '@/assets/portrait.jpg';
+import femi from '@/assets/people/femi.jpg';
+import fola from '@/assets/people/fola.jpg';
+import Icon from './icons/Icon.astro';
+import CodeToScales from './art/CodeToScales.astro';
+import { profile, summary, education, certifications, testimonials } from '@/data/cv';
+
+const photos: Record<string, ImageMetadata> = { femi, fola };
+---
+
+<section id="about" class="py-24 md:py-32">
+  <div class="wrap">
+    <h2 class="section-title">About</h2>
+
+    <!-- Portrait and summary -->
+    <div class="mt-12 grid gap-12 md:mt-16 md:grid-cols-[minmax(0,19rem)_1fr] md:gap-14 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-20">
+      <div class="frame mx-auto w-full max-w-[19rem] md:mx-0 md:max-w-none" data-reveal>
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[320, 480, 720]}
+          sizes="(min-width: 1024px) 22rem, (min-width: 768px) 19rem, 19rem"
+          width={720}
+          height={900}
+          alt="Chibuike Ewenike"
+          class="portrait"
+        />
+      </div>
+
+      <div class="self-center">
+        <p class="summary measure">{summary}</p>
+
+        <ul class="facts mt-9">
+          <li>
+            <Icon name="pin" size={18} class="text-signal" />
+            <span>{profile.location}</span>
+          </li>
+          <li>
+            <Icon name="mail" size={18} class="text-signal" />
+            <a href={`mailto:${profile.email}`} class="link inline-flex min-h-11 items-center break-all">{profile.email}</a>
+          </li>
+          <li>
+            <Icon name="phone" size={18} class="text-signal" />
+            <a href={profile.phoneHref} class="link inline-flex min-h-11 items-center">{profile.phone}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Engineer and lawyer -->
+    <div class="duo mt-20 md:mt-28" data-reveal>
+      <CodeToScales class="duo-art" />
+      <div>
+        <h3 class="sub">Software engineer and lawyer</h3>
+        <p class="duo-caption measure">
+          Called to the Nigerian Bar in July 2025, Barrister and Solicitor of the Supreme Court of Nigeria.
+        </p>
+      </div>
+    </div>
+
+    <!-- Credentials -->
+    <div class="mt-20 grid gap-14 md:mt-28 md:grid-cols-2 md:gap-16">
+      <div>
+        <h3 class="sub">Education</h3>
+        <ul class="mt-6 grid gap-6">
+          {
+            education.map((e) => (
+              <li class="law-item">
+                <p class="item-title">{e.title}</p>
+                <p class="text-muted">{e.place}</p>
+                <p class="when">{e.period}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="sub">Certifications</h3>
+        <ul class="mt-6 grid gap-6">
+          {
+            certifications.map((c) => (
+              <li class="cert">
+                <p class="year">{c.year}</p>
+                <div>
+                  <p class="item-title">{c.name}</p>
+                  <p class="text-muted">{c.issuer}</p>
+                  {c.url && (
+                    <a href={c.url} class="link cert-link" target="_blank" rel="noopener">
+                      {c.note}
+                      <span class="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="mt-20 md:mt-28">
+      <h3 class="sub">What colleagues say</h3>
+      <div class="mt-8 grid gap-12 md:grid-cols-2 md:gap-14" data-reveal>
+        {
+          testimonials.map((t) => (
+            <figure class="quote">
+              <blockquote>
+                <p>{t.quote}</p>
+              </blockquote>
+              <figcaption>
+                <Image src={photos[t.photo]} width={128} height={128} alt={t.name} class="avatar" />
+                <div>
+                  <a href={t.link} class="who" target="_blank" rel="noopener">
+                    {t.name}
+                    <span class="sr-only"> on LinkedIn (opens in a new tab)</span>
+                  </a>
+                  <p class="text-muted text-[0.95rem]">{t.title}</p>
+                </div>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Portrait: a plain 4:5 crop with a brass frame set off to the lower right. */
+  .frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+  }
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    translate: 0.85rem 0.85rem;
+    border: 1px solid color-mix(in oklab, var(--color-brass) 70%, transparent);
+    border-radius: 2px;
+  }
+  .frame :global(.portrait) {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border-radius: 2px;
+    background: var(--color-panel);
+  }
+
+  .summary {
+    font-size: clamp(1.15rem, 1.6vw, 1.32rem);
+    line-height: 1.6;
+    color: var(--color-paper);
+  }
+  .facts {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.15rem;
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+  }
+  .facts li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+  }
+  .facts :global(svg) {
+    flex: none;
+  }
+
+  .sub {
+    font-size: 1.5rem;
+    font-weight: 650;
+    font-stretch: 85%;
+    letter-spacing: -0.005em;
+  }
+
+  /* Engineer x lawyer */
+  .duo {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    justify-items: start;
+    padding-block: 2.5rem;
+    border-block: 1px solid var(--color-line);
+  }
+  .duo :global(.duo-art) {
+    width: 9.5rem;
+    flex: none;
+  }
+  @media (min-width: 40rem) {
+    .duo {
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+    }
+    .duo :global(.duo-art) {
+      width: 10.5rem;
+    }
+  }
+  .duo-caption {
+    margin-top: 0.6rem;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: var(--color-brass);
+  }
+
+  /* Credentials */
+  .item-title {
+    font-family: var(--font-display);
+    font-stretch: 90%;
+    font-weight: 600;
+    font-size: 1.12rem;
+    line-height: 1.3;
+    color: var(--color-paper);
+  }
+  .when,
+  .year {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .law-item {
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--color-brass);
+  }
+  .law-item .when {
+    color: var(--color-brass);
+  }
+  .cert {
+    display: grid;
+    grid-template-columns: 3.4rem 1fr;
+    gap: 0.25rem 0.75rem;
+  }
+  .cert .year {
+    padding-top: 0.15rem;
+  }
+  .cert-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 0.98rem;
+    overflow-wrap: anywhere;
+  }
+
+  /* Testimonials: plain text under a hairline, no cards. */
+  .quote {
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .quote blockquote {
+    margin: 0;
+  }
+  .quote blockquote p {
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: color-mix(in oklab, var(--color-paper) 92%, var(--color-ink));
+  }
+  .quote blockquote p::before {
+    content: '\201C';
+  }
+  .quote blockquote p::after {
+    content: '\201D';
+  }
+  .quote figcaption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+  }
+  .quote :global(.avatar) {
+    width: 3.75rem;
+    height: 3.75rem;
+    flex: none;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--color-line);
+  }
+  .who {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-paper);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-signal) 40%, transparent);
+    text-underline-offset: 0.2em;
+    transition: color 0.2s;
+  }
+  .who:hover {
+    color: var(--color-signal);
+  }
+</style>

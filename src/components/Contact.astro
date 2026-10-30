@@ -1,0 +1,306 @@
+---
+import Icon from './icons/Icon.astro';
+import { profile } from '@/data/cv';
+
+// Turnstile site key, inlined at build time. Without it the widget is skipped
+// and the function refuses the post, so the form falls back to the mailto.
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+
+const channels = [
+  { icon: 'mail', label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { icon: 'phone', label: 'Phone and WhatsApp', value: profile.phone, href: profile.phoneHref },
+  { icon: 'linkedin', label: 'LinkedIn', value: 'chibuike-ewenike', href: profile.links.linkedin },
+] as const;
+---
+
+<section id="contact" class="py-24 md:py-32">
+  <div class="wrap grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+    <div>
+      <h2 class="section-title">Contact</h2>
+      <p class="section-lede">Hiring for a role, or need a system built? Send a message here or reach me directly.</p>
+
+      <ul class="mt-10 grid gap-2">
+        {
+          channels.map((c) => (
+            <li>
+              <a href={c.href} class="channel group" {...(c.icon === 'linkedin' ? { target: '_blank', rel: 'noopener' } : {})}>
+                <Icon name={c.icon} size={20} class="text-signal" />
+                <span>
+                  <span class="block font-display text-sm text-muted">{c.label}</span>
+                  <span class="block font-display text-lg text-paper group-hover:text-signal break-all">{c.value}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 flex items-center gap-2 font-display text-muted">
+        <Icon name="pin" size={18} class="text-signal" />
+        {profile.location}
+      </p>
+    </div>
+
+    <div class="form-panel self-start">
+      <form data-contact novalidate class="grid gap-5" data-sitekey={siteKey}>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="field">
+            <label for="cf-name">Name</label>
+            <input id="cf-name" name="name" autocomplete="name" required minlength="2" maxlength="100" aria-describedby="cf-name-err" />
+            <p class="err" id="cf-name-err"></p>
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="254" aria-describedby="cf-email-err" />
+            <p class="err" id="cf-email-err"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="cf-subject">Subject</label>
+          <input id="cf-subject" name="subject" required minlength="3" maxlength="150" aria-describedby="cf-subject-err" />
+          <p class="err" id="cf-subject-err"></p>
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="6" required minlength="10" maxlength="5000" aria-describedby="cf-message-err"></textarea>
+          <p class="err" id="cf-message-err"></p>
+        </div>
+        <!-- Honeypot: hidden from people, filled by bots. -->
+        <div class="hp" aria-hidden="true">
+          <label for="cf-website">Website</label>
+          <input id="cf-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <div data-turnstile class="min-h-[65px]"></div>
+
+        <p class="form-status" role="status" aria-live="polite" data-status></p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="btn btn-primary" data-submit>
+            <span data-label>Send message</span>
+          </button>
+          <a href={`mailto:${profile.email}`} class="link inline-flex min-h-11 items-center font-display text-sm">or email me directly</a>
+        </div>
+      </form>
+
+      <div class="sent hidden" data-sent tabindex="-1">
+        <h3 class="font-display text-step-2">Message sent</h3>
+        <p class="mt-3 text-muted">Thanks. I'll reply to <span class="text-paper" data-sent-email></span>.</p>
+        <button type="button" class="btn btn-ghost mt-6" data-again>Send another message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-line);
+    min-height: 44px;
+  }
+  .form-panel {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    padding: clamp(1.25rem, 4vw, 2.25rem);
+  }
+  .field {
+    display: grid;
+    gap: 0.3rem;
+  }
+  .field label {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: var(--color-ink);
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    color: var(--color-paper);
+    font: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--color-signal);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 25%, transparent);
+  }
+  .field [aria-invalid='true'] {
+    border-color: #f87171;
+  }
+  /* The error line always takes its space, so showing or clearing an error never
+     moves the button under a pointer mid-click. */
+  .field .err {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    line-height: 1.25rem;
+    min-height: 1.25rem;
+    color: #fca5a5;
+  }
+  .hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .form-status:empty {
+    display: none;
+  }
+  .form-status {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+  }
+  .form-status.error {
+    color: #fca5a5;
+  }
+  [data-submit][disabled] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+</style>
+
+<script>
+  type TurnstileApi = {
+    render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+    reset: (id?: string) => void;
+    getResponse: (id?: string) => string | undefined;
+  };
+  const w = window as unknown as { turnstile?: TurnstileApi };
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact]');
+  if (form) {
+    const siteKey = form.dataset.sitekey ?? '';
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const label = submit.querySelector<HTMLElement>('[data-label]')!;
+    const sent = document.querySelector<HTMLElement>('[data-sent]')!;
+    const slot = form.querySelector<HTMLElement>('[data-turnstile]')!;
+    const startedAt = Date.now();
+    let widgetId: string | undefined;
+
+    // Load Turnstile only when the form is near the viewport.
+    if (siteKey) {
+      new IntersectionObserver(
+        (entries, obs) => {
+          if (!entries[0].isIntersecting) return;
+          obs.disconnect();
+          const s = document.createElement('script');
+          s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+          s.async = true;
+          s.onload = () => {
+            widgetId = w.turnstile?.render(slot, { sitekey: siteKey, theme: 'dark', size: 'flexible' });
+          };
+          document.head.append(s);
+        },
+        { rootMargin: '400px' },
+      ).observe(form);
+    } else {
+      slot.remove();
+    }
+
+    const messages: Record<string, string> = {
+      name: 'Enter your name',
+      email: 'Enter a valid email address',
+      subject: 'Enter a subject (at least 3 characters)',
+      message: 'Write a message (at least 10 characters)',
+    };
+    const setFieldError = (input: HTMLInputElement | HTMLTextAreaElement, msg: string) => {
+      document.getElementById(`${input.id}-err`)!.textContent = msg;
+      if (msg) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    };
+    const isValid = (f: HTMLInputElement | HTMLTextAreaElement) => f.value.trim() !== '' && f.checkValidity();
+    const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.field input, .field textarea')];
+    fields.forEach((f) => {
+      // Flag a bad value when the visitor leaves the field; clear it as soon as they fix it.
+      f.addEventListener('blur', () => f.value && !isValid(f) && setFieldError(f, messages[f.name]));
+      f.addEventListener('input', () => f.hasAttribute('aria-invalid') && isValid(f) && setFieldError(f, ''));
+    });
+
+    const setStatus = (msg: string, isError = false) => {
+      status.textContent = msg;
+      status.classList.toggle('error', isError);
+    };
+    const setBusy = (busy: boolean) => {
+      submit.disabled = busy;
+      label.textContent = busy ? 'Sending…' : 'Send message';
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setStatus('');
+      let firstBad: HTMLElement | null = null;
+      for (const f of fields) {
+        const ok = isValid(f);
+        setFieldError(f, ok ? '' : messages[f.name]);
+        if (!ok && !firstBad) firstBad = f;
+      }
+      if (firstBad) {
+        firstBad.focus();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      const payload = {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+        website: data.website,
+        turnstile: w.turnstile?.getResponse(widgetId) ?? data['cf-turnstile-response'] ?? '',
+        elapsed_ms: Date.now() - startedAt,
+      };
+
+      setBusy(true);
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const err = body?.error ?? {};
+          const field = fields.find((f) => f.name === err.field);
+          if (field) {
+            setFieldError(field, err.message);
+            field.focus();
+          } else {
+            setStatus(err.message ?? "The message couldn't be sent. Email me directly instead.", true);
+          }
+          w.turnstile?.reset(widgetId);
+          return;
+        }
+        form.classList.add('hidden');
+        sent.querySelector('[data-sent-email]')!.textContent = payload.email;
+        sent.classList.remove('hidden');
+        sent.focus();
+      } catch {
+        setStatus("You seem to be offline. Check your connection and send again, or email me directly.", true);
+      } finally {
+        setBusy(false);
+      }
+    });
+
+    sent.querySelector('[data-again]')!.addEventListener('click', () => {
+      form.reset();
+      fields.forEach((f) => setFieldError(f, ''));
+      w.turnstile?.reset(widgetId);
+      sent.classList.add('hidden');
+      form.classList.remove('hidden');
+      fields[0].focus();
+    });
+  }
+</script>

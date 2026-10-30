@@ -1,0 +1,5 @@
+# Cloudflare Pages project. Deploy from the repo root so functions/ ships with
+# the static build:  npm run deploy
+name = "bytealpha"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"

@@ -1,0 +1,298 @@
+---
+// A law report is scanned; the metadata (parties, court, date, citation) is
+// lifted off the page into a structured index record. 10s CSS loop; the static
+// (reduced-motion) state is the finished record with the fields highlighted.
+const PX = 40; // text left edge on the page
+const scanTop = 40;
+const bandMid = 55;
+const scanH = 215; // how far the band travels
+const T = 10;
+const scanStart = 0.06; // fraction of the loop
+const scanEnd = 0.46;
+
+// The four metadata lines on the page, in reading order.
+const meta = [
+  { key: 'parties', y: 52, x: PX, w: 128, h: 9, heavy: true },
+  { key: 'court', y: 78, x: PX, w: 150, h: 6 },
+  { key: 'date', y: 98, x: PX, w: 72, h: 6 },
+  { key: 'citation', y: 118, x: PX, w: 118, h: 6 },
+];
+
+const CX = 288; // chip left edge in the index card
+const rowY = [74, 120, 166, 212];
+const chips = meta.map((m, i) => {
+  const w = m.key.length * 7.4 + 22;
+  const startX = m.x + m.w;
+  const startY = m.y;
+  return {
+    ...m,
+    w,
+    cy: rowY[i],
+    fx: startX - CX,
+    fy: startY - (rowY[i] + 13),
+    // Delay so the chip leaves as the scan band reaches its line.
+    delay: +(T * (scanStart + (scanEnd - scanStart) * Math.max(0, (m.y - bandMid) / scanH))).toFixed(2),
+  };
+});
+
+const bodyWidths = [196, 188, 200, 150, 0, 196, 192, 184, 198, 120, 0, 190, 200, 176, 196, 140];
+const body = bodyWidths.map((w, i) => ({ w, y: 146 + i * 9.2 })).filter((l) => l.w > 0);
+---
+
+<div class="art" data-art-lex>
+  <svg viewBox="0 0 480 320" role="img" aria-labelledby="lx-art-title lx-art-desc">
+    <title id="lx-art-title">Lexanalytics extracting metadata from a law report</title>
+    <desc id="lx-art-desc">
+      A scanning highlight sweeps down a law report. The parties, court, date and citation are lifted from the page as tags and
+      filed into a structured index record beside it.
+    </desc>
+    <defs>
+      <pattern id="lx-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#233e5c"></circle>
+      </pattern>
+      <radialGradient id="lx-fade" cx="50%" cy="50%" r="62%">
+        <stop offset="0.45" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </radialGradient>
+      <mask id="lx-mask"><rect width="480" height="320" fill="url(#lx-fade)"></rect></mask>
+      <linearGradient id="lx-scan" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e8b04b" stop-opacity="0"></stop>
+        <stop offset="1" stop-color="#e8b04b" stop-opacity="0.42"></stop>
+      </linearGradient>
+      <clipPath id="lx-page-clip"><rect x="24" y="24" width="220" height="272" rx="6"></rect></clipPath>
+    </defs>
+    <rect width="480" height="320" fill="url(#lx-dots)" mask="url(#lx-mask)"></rect>
+
+    <!-- The law report -->
+    <rect x="24" y="24" width="220" height="272" rx="6" class="page"></rect>
+    <g clip-path="url(#lx-page-clip)">
+      <!-- Marks behind the metadata lines, lit when the scan reaches them. -->
+      {chips.map((c) => <rect x={c.x - 5} y={c.y - c.h / 2 - 5} width={c.w + 10} height={c.h + 10} rx="3" class="mark" style={`--d:${c.delay}s`} />)}
+      <g class="text">
+        {chips.map((c) => <rect x={c.x} y={c.y - c.h / 2} width={c.w} height={c.h} rx={c.h / 2} class:list={['line', { heavy: c.heavy }]} />)}
+        {body.map((l) => <rect x={PX} y={l.y} width={l.w} height="4.5" rx="2.25" class="line body" />)}
+      </g>
+      <rect x="24" y={scanTop} width="220" height="30" fill="url(#lx-scan)" class="scan"></rect>
+      <rect x="24" y={scanTop + 29} width="220" height="1.5" class="scan scan-edge"></rect>
+    </g>
+
+    <!-- The index record -->
+    <rect x="272" y="40" width="192" height="248" rx="10" class="card"></rect>
+    <text x="288" y="62" class="card-title">Case record</text>
+    {
+      chips.map((c) => (
+        <g>
+          <rect x={CX - 4} y={c.cy - 4} width="176" height="1" class="slot-rule" />
+          <rect x={CX} y={c.cy + 30} width={c.key === 'date' ? 82 : c.key === 'parties' ? 150 : 128} height="7" rx="3.5" class="value" style={`--d:${c.delay}s`} />
+        </g>
+      ))
+    }
+    {
+      chips.map((c) => (
+        <g class="tag" style={`--fx:${c.fx.toFixed(1)}px;--fy:${c.fy.toFixed(1)}px;--d:${c.delay}s`}>
+          <rect x={CX} y={c.cy + 2} width={c.w} height="22" rx="11" class="tag-box" />
+          <text x={CX + c.w / 2} y={c.cy + 17} text-anchor="middle" class="tag-text">{c.key}</text>
+        </g>
+      ))
+    }
+    <g class="indexed" font-family="var(--font-display)">
+      <circle cx="294" cy="268" r="4" class="ok-dot"></circle>
+      <text x="306" y="272" class="ok-text">Indexed and searchable</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .page {
+    fill: var(--color-paper);
+    filter: drop-shadow(0 10px 16px rgb(5 10 20 / 0.45));
+  }
+  .line {
+    fill: var(--color-ink);
+    opacity: 0.26;
+  }
+  .line.heavy {
+    opacity: 0.85;
+  }
+  .text .line:not(.body):not(.heavy) {
+    opacity: 0.55;
+  }
+  .mark {
+    fill: var(--color-brass);
+    opacity: 0.45;
+  }
+  .scan {
+    opacity: 0;
+    fill: var(--color-brass);
+  }
+  .scan:not(.scan-edge) {
+    fill: url(#lx-scan);
+  }
+
+  .card {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1.25;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    fill: var(--color-paper);
+  }
+  .slot-rule {
+    fill: var(--color-line);
+    opacity: 0.6;
+  }
+  .value {
+    fill: var(--color-signal-dim);
+    opacity: 0.9;
+    transform-box: fill-box;
+    transform-origin: left center;
+  }
+  .tag {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .tag-box {
+    fill: var(--color-brass);
+  }
+  .tag-text {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 650;
+    fill: var(--color-ink-deep);
+  }
+  .ok-dot {
+    fill: var(--color-signal);
+  }
+  .ok-text {
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--color-signal);
+  }
+
+  /* 10s loop. Chips, marks and values share one keyframe each and are shifted
+     by --d (the moment the scan reaches their line); backwards fill hides them
+     until then. Their fade-out lands before the next scan starts. */
+  @media (prefers-reduced-motion: no-preference) {
+    .scan {
+      animation: scan 10s linear infinite;
+    }
+    .mark {
+      animation: mark 10s linear infinite backwards;
+      animation-delay: var(--d);
+    }
+    .tag {
+      animation: tag 10s var(--ease-out-quart) infinite backwards;
+      animation-delay: var(--d);
+    }
+    .value {
+      animation: value 10s var(--ease-out-quart) infinite backwards;
+      animation-delay: var(--d);
+    }
+    .indexed {
+      animation: indexed 10s linear infinite;
+    }
+  }
+  @keyframes scan {
+    0%,
+    4% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    6% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    46% {
+      opacity: 1;
+      transform: translateY(215px);
+    }
+    50%,
+    100% {
+      opacity: 0;
+      transform: translateY(215px);
+    }
+  }
+  @keyframes mark {
+    0% {
+      opacity: 0;
+    }
+    2%,
+    70% {
+      opacity: 0.45;
+    }
+    76%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes tag {
+    0% {
+      opacity: 0;
+      transform: translate(var(--fx), var(--fy)) scale(0.6);
+    }
+    3% {
+      opacity: 1;
+      transform: translate(var(--fx), var(--fy)) scale(1);
+    }
+    16%,
+    70% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    76%,
+    100% {
+      opacity: 0;
+      transform: translate(0, 0) scale(1);
+    }
+  }
+  @keyframes value {
+    0%,
+    14% {
+      opacity: 0.9;
+      transform: scaleX(0);
+    }
+    24%,
+    70% {
+      opacity: 0.9;
+      transform: scaleX(1);
+    }
+    76%,
+    100% {
+      opacity: 0;
+      transform: scaleX(1);
+    }
+  }
+  @keyframes indexed {
+    0%,
+    34% {
+      opacity: 0;
+    }
+    40%,
+    72% {
+      opacity: 1;
+    }
+    78%,
+    100% {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-art-lex]').forEach((root) => {
+    const svg = root.querySelector('svg');
+    if (!svg || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    new IntersectionObserver(([e]) => {
+      for (const a of root.getAnimations({ subtree: true })) e.isIntersecting ? a.play() : a.pause();
+    }).observe(root);
+  });
+</script>

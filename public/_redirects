@@ -1,0 +1,5 @@
+# Old CV filename, still in circulation from the previous site.
+/Chibuike_Ewenike_Software_engineer_CV.pdf  /Chibuike_Ewenike_CV.pdf  301
+# Old query-string section links (?section=about#about) land on the page anyway;
+# the apex goes to www, the canonical host, in functions/_middleware.js
+# (_redirects can't match on hostname).

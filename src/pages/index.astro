@@ -1,0 +1,47 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Hero from '@/components/Hero.astro';
+import Projects from '@/components/Projects.astro';
+import Experience from '@/components/Experience.astro';
+import Skills from '@/components/Skills.astro';
+import About from '@/components/About.astro';
+import Contact from '@/components/Contact.astro';
+import Footer from '@/components/Footer.astro';
+import { profile } from '@/data/cv';
+
+const title = `${profile.name}, Software Engineer (Backend, Full-Stack, AI Systems)`;
+const description =
+  'Chibuike Ewenike is a Lagos-based software engineer building production SaaS, AI systems and AI agents in Go, Python and TypeScript: QuickPharms, Eureka, Green Rhino and Lexanalytics. Also called to the Nigerian Bar.';
+
+// ProfilePage is what Google reads to treat the home page as this person's profile.
+const origin = Astro.site!.origin;
+const jsonLd = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${origin}/#profilepage`,
+    url: `${origin}/`,
+    name: title,
+    description,
+    inLanguage: 'en',
+    isPartOf: { '@id': `${origin}/#website` },
+    mainEntity: { '@id': `${origin}/#person` },
+    about: { '@id': `${origin}/#person` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: `${origin}/chibuike-ewenike.jpg` },
+    dateModified: new Date().toISOString(),
+  },
+];
+---
+
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <Nav home />
+  <main id="main">
+    <Hero />
+    <Projects />
+    <Experience />
+    <Skills />
+    <About />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

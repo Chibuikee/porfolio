@@ -1,0 +1,282 @@
+---
+// A stylised route map. The truck follows a multi-stop loaded route (solid),
+// then an empty leg back to the next pickup (dashed), pinging its GPS position
+// as it goes. Pure SMIL on one 10s clock so every piece stays in step; the
+// script pauses it off screen and, under reduced motion, shows the finished map.
+type P = [number, number];
+const loaded: P[] = [[56, 256], [56, 196], [96, 156], [210, 156], [250, 116], [250, 66], [330, 66], [380, 66], [424, 110], [424, 150]];
+const empty: P[] = [[424, 150], [424, 240], [384, 280], [250, 280], [214, 244], [190, 244]];
+const stops = [
+  { p: loaded[0], label: 'Pickup', dx: 14, dy: 4, anchor: 'start' },
+  { p: loaded[3], label: 'Stop 1', dx: 0, dy: 26, anchor: 'middle' },
+  { p: loaded[6], label: 'Stop 2', dx: 0, dy: -16, anchor: 'middle' },
+  { p: loaded[9], label: 'Delivery', dx: -14, dy: 5, anchor: 'end' },
+];
+
+const len = (pts: P[]) => pts.slice(1).reduce((s, p, i) => s + Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]), 0);
+const distTo = (pts: P[], q: P) => {
+  let acc = 0;
+  for (let i = 1; i < pts.length; i++) {
+    if (pts[i][0] === q[0] && pts[i][1] === q[1]) return acc + Math.hypot(q[0] - pts[i - 1][0], q[1] - pts[i - 1][1]);
+    acc += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+  }
+  return 0;
+};
+const d = (pts: P[]) => pts.map((p, i) => `${i ? 'L' : 'M'}${p[0]} ${p[1]}`).join(' ');
+
+const L1 = len(loaded);
+const L2 = len(empty);
+const total = L1 + L2;
+const f1 = L1 / total;
+// Timeline as fractions of the 10s cycle: idle, travel (t0..t1), hold, fade.
+const t0 = 0.08;
+const t1 = 0.8;
+const at = (frac: number) => +(t0 + (t1 - t0) * frac).toFixed(4);
+const tLoaded = at(f1);
+const stopTimes = stops.map((s) => at(distTo(loaded, s.p) / total));
+const T = '10s';
+const fix = (n: number) => n.toFixed(4);
+---
+
+<div class="art" data-art-gr>
+  <svg viewBox="0 0 480 320" role="img" aria-labelledby="gr-art-title gr-art-desc" data-route={d(loaded)}>
+    <title id="gr-art-title">Green Rhino truck tracked along a multi-stop route</title>
+    <desc id="gr-art-desc">
+      A truck travels a multi-stop route on a map, pinging its GPS position. The loaded miles are drawn as a solid line and
+      the empty leg back to the next pickup as a dashed line.
+    </desc>
+    <defs>
+      <pattern id="gr-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#233e5c"></circle>
+      </pattern>
+      <radialGradient id="gr-fade" cx="50%" cy="50%" r="62%">
+        <stop offset="0.5" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </radialGradient>
+      <mask id="gr-mask"><rect width="480" height="320" fill="url(#gr-fade)"></rect></mask>
+      <mask id="gr-empty-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="480" height="320">
+        <path d={d(empty)} pathLength="100" class="m-reveal" stroke-dasharray="100" stroke-dashoffset="0" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+          <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes={`0;${fix(tLoaded)};${fix(t1)};1`} dur={T} repeatCount="indefinite" />
+        </path>
+      </mask>
+    </defs>
+
+    <rect width="480" height="320" fill="url(#gr-dots)" mask="url(#gr-mask)"></rect>
+
+    <!-- Street grid: quiet context. -->
+    <g class="streets" fill="none">
+      <path d="M20 110 H460 M20 206 H460 M20 300 H460 M120 20 V300 M290 20 V300 M452 20 V300"></path>
+    </g>
+
+    <!-- Planned route, then the traced miles drawn over it as the truck passes. -->
+    <g class="route" fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <path d={`${d(loaded)} ${d(empty).replace('M', 'L')}`} class="plan"></path>
+      <g class="traces">
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.9;0.96;1" dur={T} repeatCount="indefinite" />
+        <path id="gr-loaded" d={d(loaded)} pathLength="100" class="loaded" stroke-dasharray="100" stroke-dashoffset="0">
+          <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes={`0;${t0};${fix(tLoaded)};1`} dur={T} repeatCount="indefinite" />
+        </path>
+        <path d={d(empty)} class="empty" mask="url(#gr-empty-mask)"></path>
+      </g>
+    </g>
+
+    <g class="stops" font-family="var(--font-display)">
+      {
+        stops.map((s, i) => (
+          <g>
+            <circle cx={s.p[0]} cy={s.p[1]} r="7" class="stop-ring"></circle>
+            <circle cx={s.p[0]} cy={s.p[1]} r="4" class="stop-lit">
+              <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes={`0;${fix(stopTimes[i])};${fix(stopTimes[i] + 0.02)};0.9;0.96;1`} dur={T} repeatCount="indefinite" />
+            </circle>
+            <text x={s.p[0] + s.dx} y={s.p[1] + s.dy} text-anchor={s.anchor} class="stop-label">{s.label}</text>
+          </g>
+        ))
+      }
+      <g>
+        <circle cx={empty[empty.length - 1][0]} cy={empty[empty.length - 1][1]} r="5" class="next-pickup"></circle>
+        <text x={empty[empty.length - 1][0] - 12} y={empty[empty.length - 1][1] + 5} text-anchor="end" class="stop-label">Next pickup</text>
+      </g>
+    </g>
+
+    <!-- The truck: a top-down rig facing +x, with GPS pings that travel with it. -->
+    <g class="truck" data-truck>
+      <animateMotion
+        path={`${d(loaded)} ${d(empty).replace('M', 'L')}`}
+        rotate="auto"
+        dur={T}
+        repeatCount="indefinite"
+        calcMode="linear"
+        keyPoints="0;0;1;1"
+        keyTimes={`0;${t0};${t1};1`}
+      />
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.04;0.9;0.96;1" dur={T} repeatCount="indefinite" />
+      <circle r="14" class="ping" opacity="0.3">
+        <animate attributeName="r" values="5;26" dur="1.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0" dur="1.8s" repeatCount="indefinite" />
+      </circle>
+      <circle r="14" class="ping" opacity="0.3">
+        <animate attributeName="r" values="5;26" dur="1.8s" begin="0.9s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;0" dur="1.8s" begin="0.9s" repeatCount="indefinite" />
+      </circle>
+      <rect x="-12" y="-5.5" width="16" height="11" rx="2.5" class="trailer"></rect>
+      <rect x="6" y="-4.5" width="8" height="9" rx="2.5" class="cab"></rect>
+    </g>
+
+    <g class="live" font-family="var(--font-display)">
+      <rect x="16" y="14" width="106" height="28" rx="14" class="live-box"></rect>
+      <circle cx="33" cy="28" r="4" class="live-dot"></circle>
+      <circle cx="33" cy="28" r="4" class="live-ping"></circle>
+      <text x="45" y="33" class="live-text">Live tracking</text>
+    </g>
+
+    <g class="legend" font-family="var(--font-display)">
+      <path d="M352 298 H378" class="lg-loaded"></path>
+      <text x="384" y="302">Loaded</text>
+      <path d="M352 314 H378" class="lg-empty"></path>
+      <text x="384" y="318">Empty miles</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .streets path {
+    stroke: var(--color-line);
+    stroke-width: 1;
+    opacity: 0.35;
+  }
+  .plan {
+    stroke: var(--color-line);
+    stroke-width: 6;
+    opacity: 0.55;
+  }
+  .loaded {
+    stroke: var(--color-signal);
+    stroke-width: 3.5;
+  }
+  .empty {
+    stroke: var(--color-muted);
+    stroke-width: 3;
+    stroke-dasharray: 2 8;
+    stroke-linecap: round;
+  }
+  .stop-ring {
+    fill: var(--color-ink);
+    stroke: var(--color-line);
+    stroke-width: 2;
+  }
+  .stop-lit {
+    fill: var(--color-signal);
+  }
+  .next-pickup {
+    fill: var(--color-ink);
+    stroke: var(--color-muted);
+    stroke-width: 2;
+    stroke-dasharray: 3 3;
+  }
+  .stop-label {
+    font-size: 12.5px;
+    font-weight: 500;
+    fill: var(--color-paper);
+  }
+  .ping {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 1.5;
+  }
+  .trailer {
+    fill: var(--color-paper);
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+  }
+  .cab {
+    fill: var(--color-signal);
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+  }
+  .truck {
+    filter: drop-shadow(0 0 5px rgb(22 192 240 / 0.45));
+  }
+  .live-box {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+  }
+  .live-dot,
+  .live-ping {
+    fill: var(--color-signal);
+  }
+  .live-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: live-ping 2s var(--ease-out-quart) infinite;
+  }
+  .live-text {
+    font-size: 13px;
+    font-weight: 500;
+    fill: var(--color-paper);
+  }
+  @keyframes live-ping {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    80%,
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+  .legend text {
+    font-size: 12.5px;
+    fill: var(--color-muted);
+  }
+  .lg-loaded {
+    stroke: var(--color-signal);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+  }
+  .lg-empty {
+    stroke: var(--color-muted);
+    stroke-width: 3;
+    stroke-dasharray: 2 8;
+    stroke-linecap: round;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-ping {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-art-gr]').forEach((root) => {
+    const svg = root.querySelector('svg');
+    if (!svg) return;
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Static state: finished map, truck parked on the loaded route, no moving parts.
+      svg.querySelectorAll('animate, animateMotion').forEach((el) => el.remove());
+      const route = svg.querySelector<SVGPathElement>('#gr-loaded');
+      const truck = svg.querySelector<SVGGElement>('[data-truck]');
+      if (route && truck) {
+        const len = route.getTotalLength();
+        const a = route.getPointAtLength(len * 0.62);
+        const b = route.getPointAtLength(len * 0.62 + 2);
+        const deg = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+        truck.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${deg})`);
+      }
+      svg.pauseAnimations();
+      return;
+    }
+
+    // Hold the loop while the illustration is off screen.
+    new IntersectionObserver(([e]) => {
+      e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations();
+    }).observe(root);
+  });
+</script>

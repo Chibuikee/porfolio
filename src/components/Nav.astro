@@ -1,0 +1,123 @@
+---
+import Icon from './icons/Icon.astro';
+import { profile } from '@/data/cv';
+
+interface Props {
+  /** On the home page links are bare #hashes; elsewhere they point back to /. */
+  home?: boolean;
+}
+const { home = false } = Astro.props;
+const base = home ? '' : '/';
+const links = [
+  { href: `${base}#work`, id: 'work', label: 'Work' },
+  { href: `${base}#experience`, id: 'experience', label: 'Experience' },
+  { href: `${base}#about`, id: 'about', label: 'About' },
+  { href: `${base}#contact`, id: 'contact', label: 'Contact' },
+];
+---
+
+<header class="site-nav fixed inset-x-0 top-0 z-50" data-nav>
+  <nav class="wrap flex h-16 items-center justify-between gap-4" aria-label="Main">
+    <a href={home ? '#top' : '/'} class="inline-flex min-h-11 items-center font-display text-xl font-bold tracking-tight text-paper" aria-label={`${profile.name}, home`}>
+      Chibuike<span class="text-signal">.</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 md:flex">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} data-section={l.id} class="nav-link rounded-full px-3 py-2 font-display text-[0.95rem] text-muted transition-colors hover:text-paper">
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="ml-2">
+        <a href={profile.cv} download class="btn btn-ghost !px-4 !py-2 text-sm">
+          <Icon name="download" size={16} /> CV
+        </a>
+      </li>
+    </ul>
+
+    <button type="button" class="grid size-11 place-items-center rounded-full text-paper md:hidden" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Menu</span>
+      <Icon name="menu" size={24} class="menu-open" />
+      <Icon name="close" size={24} class="menu-close hidden" />
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu wrap hidden pb-6 md:hidden" data-menu>
+    <ul class="grid gap-1 border-t border-line pt-4">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} class="block py-3 font-display text-2xl font-semibold text-paper">
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={profile.cv} download class="btn btn-primary mt-4">
+      <Icon name="download" size={16} /> Download CV
+    </a>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    background: color-mix(in oklab, var(--color-ink) 72%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .site-nav.is-scrolled {
+    border-bottom-color: var(--color-line);
+  }
+  .nav-link[aria-current='true'] {
+    color: var(--color-signal);
+    background: color-mix(in oklab, var(--color-signal) 10%, transparent);
+  }
+</style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+  const toggle = nav.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const menu = nav.querySelector<HTMLElement>('[data-menu]')!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    menu.classList.toggle('hidden', !open);
+    toggle.querySelector('.menu-open')!.classList.toggle('hidden', open);
+    toggle.querySelector('.menu-close')!.classList.toggle('hidden', !open);
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Highlight the section in view. Reads the DOM only: the URL and history are
+  // never touched, so scrolling doesn't fill the back button with entries.
+  const links = [...nav.querySelectorAll<HTMLAnchorElement>('[data-section]')];
+  const sections = links
+    .map((l) => document.getElementById(l.dataset.section!))
+    .filter((s): s is HTMLElement => s !== null);
+  if (sections.length) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          for (const l of links) l.setAttribute('aria-current', String(l.dataset.section === e.target.id));
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((s) => spy.observe(s));
+  }
+</script>

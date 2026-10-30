@@ -1,0 +1,104 @@
+---
+import { skills } from '@/data/cv';
+---
+
+<section id="skills" class="py-24 md:py-32">
+  <div class="wrap">
+    <h2 class="section-title">Skills</h2>
+    <p class="section-lede">What I reach for, grouped by the job it does.</p>
+
+    <dl class="skills mt-12 md:mt-16">
+      {
+        skills.map((group) => (
+          <div class="row">
+            <dt>{group.name}</dt>
+            <dd>
+              <ul>
+                {group.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .skills {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .row {
+    position: relative;
+    display: grid;
+    gap: 0.6rem 2rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--color-line);
+    transition: opacity 0.3s;
+  }
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: 14rem 1fr;
+      padding: 1.7rem 0;
+    }
+  }
+  /* A signal rule grows along the top edge of the row under the pointer. */
+  .row::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--color-signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out-quart);
+  }
+  dt {
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 650;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    color: var(--color-paper);
+    transition: color 0.25s;
+  }
+  dd {
+    margin: 0;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 1.5rem;
+    font-size: 1.04rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+  li {
+    transition: color 0.25s;
+  }
+
+  @media (hover: hover) {
+    .skills:has(.row:hover) .row:not(:hover) {
+      opacity: 0.55;
+    }
+    .row:hover::before {
+      transform: scaleX(1);
+    }
+    .row:hover dt {
+      color: var(--color-signal);
+    }
+    .row:hover li {
+      color: var(--color-paper);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .row::before {
+      transition: none;
+    }
+  }
+</style>

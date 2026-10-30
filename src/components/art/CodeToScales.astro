@@ -1,0 +1,181 @@
+---
+// A code brace pair { } that slowly turns into the scales of justice, and back.
+// Braces are signal (engineering), scales are brass (the Bar). CSS only: crossfade,
+// a stroke redraw on the scales, and a slow rock of the beam.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class:list={['c2s', className]}
+  viewBox="0 0 160 160"
+  fill="none"
+  stroke-width="5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role="img"
+  aria-label="A pair of code braces slowly turning into the scales of justice"
+>
+  <circle cx="80" cy="80" r="76" class="ring" stroke-width="1" />
+
+  <g class="braces">
+    <path pathLength="1" d="M62 30C48 30 50 44 50 58C50 68 44 76 36 80C44 84 50 92 50 102C50 116 48 130 62 130" />
+    <path pathLength="1" d="M98 30C112 30 110 44 110 58C110 68 116 76 124 80C116 84 110 92 110 102C110 116 112 130 98 130" />
+  </g>
+
+  <g class="scales" stroke-width="4">
+    <path pathLength="1" class="draw" d="M80 44V128" />
+    <path pathLength="1" class="draw" d="M56 130H104" />
+    <g class="beam">
+      <path pathLength="1" class="draw" d="M40 52H120" />
+      <g class="pan pan-l">
+        <path pathLength="1" class="draw" stroke-width="2.5" d="M40 52L26 94M40 52L54 94" />
+        <path pathLength="1" class="draw" d="M22 94H58C58 110 50 114 40 114C30 114 22 110 22 94Z" />
+      </g>
+      <g class="pan pan-r">
+        <path pathLength="1" class="draw" stroke-width="2.5" d="M120 52L106 94M120 52L134 94" />
+        <path pathLength="1" class="draw" d="M102 94H138C138 110 130 114 120 114C110 114 102 110 102 94Z" />
+      </g>
+    </g>
+    <circle cx="80" cy="40" r="4" fill="currentColor" stroke="none" class="finial" />
+  </g>
+</svg>
+
+<style>
+  .c2s {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .ring {
+    stroke: var(--color-line);
+  }
+  .braces {
+    stroke: var(--color-signal);
+  }
+  .scales {
+    color: var(--color-brass);
+    stroke: var(--color-brass);
+  }
+  .braces,
+  .scales {
+    transform-box: view-box;
+    transform-origin: 80px 80px;
+  }
+  .braces {
+    animation: braces 14s ease-in-out infinite;
+  }
+  .scales {
+    animation: scales 14s ease-in-out infinite;
+  }
+  .draw {
+    stroke-dasharray: 1;
+    animation: redraw 14s ease-in-out infinite;
+  }
+  .beam {
+    transform-box: view-box;
+    transform-origin: 80px 52px;
+    animation: rock 5s ease-in-out infinite alternate;
+  }
+  .pan {
+    animation: sway-l 5s ease-in-out infinite alternate;
+  }
+  .pan-r {
+    animation-name: sway-r;
+  }
+
+  @keyframes braces {
+    0%,
+    34% {
+      opacity: 1;
+      scale: 1;
+    }
+    46%,
+    90% {
+      opacity: 0;
+      scale: 0.86;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+  @keyframes scales {
+    0%,
+    38% {
+      opacity: 0;
+      scale: 0.86;
+    }
+    52%,
+    84% {
+      opacity: 1;
+      scale: 1;
+    }
+    94%,
+    100% {
+      opacity: 0;
+      scale: 0.86;
+    }
+  }
+  @keyframes redraw {
+    0%,
+    38% {
+      stroke-dashoffset: 1;
+    }
+    58%,
+    84% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes rock {
+    from {
+      rotate: -3.5deg;
+    }
+    to {
+      rotate: 3.5deg;
+    }
+  }
+  @keyframes sway-l {
+    from {
+      translate: 0 -2.4px;
+    }
+    to {
+      translate: 0 2.4px;
+    }
+  }
+  @keyframes sway-r {
+    from {
+      translate: 0 2.4px;
+    }
+    to {
+      translate: 0 -2.4px;
+    }
+  }
+
+  /* Reduced motion: no morph. Both marks sit side by side, braces then scales. */
+  @media (prefers-reduced-motion: reduce) {
+    .braces,
+    .scales,
+    .draw,
+    .beam,
+    .pan {
+      animation: none;
+    }
+    .draw {
+      stroke-dasharray: none;
+    }
+    .braces {
+      translate: -42px 0;
+      scale: 0.62;
+    }
+    .scales {
+      translate: 42px 0;
+      scale: 0.62;
+    }
+  }
+</style>
