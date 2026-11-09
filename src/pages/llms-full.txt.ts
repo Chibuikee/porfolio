@@ -2,7 +2,7 @@
 // from cv.ts so it can never drift from the site. /llms.txt (in public/) is the
 // short index that points here.
 import type { APIRoute } from 'astro';
-import { profile, summary, skills, experience, flagships, sideProjects, education, certifications } from '@/data/cv';
+import { profile, summary, skills, experience, flagships, sideProjects, articles, education, certifications } from '@/data/cv';
 
 export const GET: APIRoute = ({ site }) => {
   const origin = site!.origin;
@@ -44,6 +44,10 @@ export const GET: APIRoute = ({ site }) => {
     '',
     ...flagships.map((f) => `- ${f.name} (${f.url}): ${f.description} Case study: ${origin}/projects/${f.slug}`),
     ...sideProjects.map((p) => `- ${p.name} (${p.url}): ${p.summary} Stack: ${p.tags.join(', ')}.`),
+    '',
+    '## Writing',
+    '',
+    ...articles.map((a) => `- ${a.title} (${a.outlet}, ${a.date}): ${a.url}. ${a.summary}`),
     '',
     '## Skills',
     '',

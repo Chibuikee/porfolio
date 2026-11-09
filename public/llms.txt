@@ -15,6 +15,10 @@ Contact: sopewenike@yahoo.com, +234 903 212 5576, https://www.linkedin.com/in/ch
 
 DanceDeal Training Foundation (dancedeal.org), Dancerapy (dancerapy.org), Nuvoro (nuvoro.net), StalwartBlue (opticap.stalwartblue.com), BrainzCode, Growthclub (growthclub.life).
 
+## Writing
+
+- [Moving production object storage off a self-hosted MinIO onto Cloudflare R2, with no downtime and no lost files](https://www.linkedin.com/pulse/moving-production-object-storage-off-self-hosted-minio-ewenike-wqnle) (LinkedIn, 9 Nov 2026)
+
 ## CV
 
 - [Full CV as text](https://www.bytealpha.online/llms-full.txt): every role, skill and credential, generated from the same data as the site

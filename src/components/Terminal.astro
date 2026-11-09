@@ -6,7 +6,7 @@ import { platformCount } from '@/data/cv';
 type Line = { kind: 'cmd' | 'out' | 'ok'; text: string; value?: string };
 const lines: Line[] = [
   { kind: 'cmd', text: 'whoami' },
-  { kind: 'out', text: 'software engineer, barrister' },
+  { kind: 'out', text: 'software engineer, lawyer' },
   { kind: 'cmd', text: 'cat shipped.txt' },
   { kind: 'out', text: 'platforms', value: `${platformCount} in production` },
   { kind: 'out', text: 'endpoints', value: '~275 in one Go API' },

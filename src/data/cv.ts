@@ -297,6 +297,26 @@ export const sideProjects: SideProject[] = [
   { slug: 'growthclub', name: 'Growthclub', summary: 'Membership platform with subscriptions and dashboards.', url: 'https://growthclub.life/', urlLabel: 'growthclub.life', tags: ['Next.js', 'Stripe', 'MongoDB'] },
 ];
 
+export type Article = {
+  title: string;
+  url: string;
+  /** ISO date, YYYY-MM-DD. */
+  date: string;
+  outlet: string;
+  summary: string;
+};
+
+export const articles: Article[] = [
+  {
+    title: 'Moving production object storage off a self-hosted MinIO onto Cloudflare R2, with no downtime and no lost files',
+    url: 'https://www.linkedin.com/pulse/moving-production-object-storage-off-self-hosted-minio-ewenike-wqnle',
+    date: '2026-11-09',
+    outlet: 'LinkedIn',
+    summary:
+      'How a live product moved its images and documents from MinIO to Cloudflare R2 using verified backups, staged code changes and a rollback plan, and freed about 190 MB of server RAM.',
+  },
+];
+
 export const education = [
   { title: 'Bachelor of Laws (LLB)', place: 'University of Lagos, Nigeria', period: '2016 – 2023' },
   { title: 'Called to the Nigerian Bar', place: 'Barrister and Solicitor of the Supreme Court of Nigeria', period: 'Jul 2025' },
