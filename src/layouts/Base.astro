@@ -48,7 +48,8 @@ const person = {
     { '@type': 'Occupation', name: 'Barrister and Solicitor of the Supreme Court of Nigeria' },
   ],
   worksFor: current.map(org),
-  founder: current.filter((r) => r.title.includes('Founder')).map(org),
+  // Founding a company stays true after the role ends, so this reads every role.
+  founder: experience.filter((r) => r.title.includes('Founder')).map(org),
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Lagos', address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' } },
   hasCredential: education.map((e) => ({ '@type': 'EducationalOccupationalCredential', name: e.title, recognizedBy: { '@type': 'Organization', name: e.place } })),
   knowsAbout: skills.flatMap((g) => g.items).slice(0, 40),
