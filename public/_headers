@@ -17,3 +17,7 @@
 /Chibuike_Ewenike_CV.pdf
   Cache-Control: public, max-age=3600
   Content-Disposition: inline; filename="Chibuike_Ewenike_CV.pdf"
+
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+  X-Robots-Tag: noindex

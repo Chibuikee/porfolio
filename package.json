@@ -6,7 +6,7 @@
   "description": "Portfolio of Chibuike Ewenike, software engineer. Served at https://www.bytealpha.online",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && node scripts/csp.mjs",
+    "build": "astro check && astro build && node scripts/csp.mjs && node scripts/markdown.mjs dist",
     "preview": "astro preview",
     "check": "astro check",
     "pages:dev": "wrangler pages dev dist",
@@ -26,6 +26,8 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "node-html-markdown": "^2.0.0",
+    "node-html-parser": "^9.0.7",
     "sharp": "^0.35.5",
     "wrangler": "^4.156.0"
   }

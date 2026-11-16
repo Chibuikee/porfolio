@@ -2,8 +2,11 @@
 # answers. The named groups below spell that out for bots that look for their
 # own entry before falling back to *.
 
+# Content signals (contentsignals.org): search, AI answers and AI training are all allowed.
+# Repeated in each group because a bot with its own group ignores the * group.
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 # OpenAI (ChatGPT search, browsing, training)
 User-agent: OAI-SearchBot
@@ -26,5 +29,6 @@ User-agent: DuckAssistBot
 User-agent: meta-externalagent
 User-agent: MistralAI-User
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://www.bytealpha.online/sitemap-index.xml
