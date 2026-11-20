@@ -42,6 +42,10 @@ const photos: Record<string, ImageMetadata> = { femi, fola };
             <a href={`mailto:${profile.email}`} class="link inline-flex min-h-11 items-center break-all">{profile.email}</a>
           </li>
           <li>
+            <Icon name="mail" size={18} class="text-signal" />
+            <a href={`mailto:${profile.workEmail}`} class="link inline-flex min-h-11 items-center break-all">{profile.workEmail}</a>
+          </li>
+          <li>
             <Icon name="phone" size={18} class="text-signal" />
             <a href={profile.phoneHref} class="link inline-flex min-h-11 items-center">{profile.phone}</a>
           </li>

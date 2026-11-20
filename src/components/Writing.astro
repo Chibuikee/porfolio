@@ -20,7 +20,11 @@ const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', y
             </p>
             <div>
               <h3 class="title">
-                <a href={a.url} class="link" rel="noopener" target="_blank">{a.title}</a>
+                {a.slug ? (
+                  <a href={a.url} class="link">{a.title}</a>
+                ) : (
+                  <a href={a.url} class="link" rel="noopener" target="_blank">{a.title}</a>
+                )}
               </h3>
               <p class="summary measure">{a.summary}</p>
             </div>

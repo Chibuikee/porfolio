@@ -27,7 +27,7 @@ export async function onRequestPost({ request, env }) {
   const missing = ['TURNSTILE_SECRET_KEY', 'ZEPTO_MAIL_API_KEY', 'MAIL_FROM', 'CONTACT_TO'].filter((k) => !env[k])
   if (missing.length) {
     console.error('contact: missing secrets', missing.join(', '))
-    return fail(503, 'contact_misconfigured', 'The contact form is not set up yet. Email sopewenike@yahoo.com instead.')
+    return fail(503, 'contact_misconfigured', 'The contact form is not set up yet. Email sopewenike@gmail.com or chibuikeewenike@bytealpha.online instead.')
   }
   if (!(request.headers.get('Content-Type') || '').startsWith('application/json')) {
     return fail(415, 'unsupported_media_type', 'Send the request as JSON')
@@ -102,7 +102,7 @@ export async function onRequestPost({ request, env }) {
     // ZeptoMail's body is the only useful part of its failures ("domain not verified").
     const detail = res ? (await res.text()).slice(0, 500) : 'network error'
     console.error('contact: zeptomail', res?.status, detail)
-    return fail(503, 'send_failed', "The message couldn't be sent. Email sopewenike@yahoo.com instead.")
+    return fail(503, 'send_failed', "The message couldn't be sent. Email sopewenike@gmail.com or chibuikeewenike@bytealpha.online instead.")
   }
   return json(200, { ok: true })
 }

@@ -1,0 +1,148 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Icon from '@/components/icons/Icon.astro';
+import { articles, type Article } from '@/data/cv';
+
+export function getStaticPaths() {
+  return articles.filter((a) => a.slug).map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props as { article: Article };
+const entry = await getEntry('writing', article.slug!);
+if (!entry) throw new Error(`src/content/writing/${article.slug}.md is missing`);
+const { Content } = await render(entry);
+
+const words = (entry.body ?? '').split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 220));
+const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const origin = Astro.site!.origin;
+const pageUrl = `${origin}/writing/${article.slug}`;
+const jsonLd = [
+  {
+    '@type': 'TechArticle',
+    '@id': `${pageUrl}#article`,
+    headline: article.title,
+    description: article.summary,
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    datePublished: article.date,
+    dateModified: article.date,
+    wordCount: words,
+    inLanguage: 'en',
+    image: `${origin}/og.png`,
+    isPartOf: { '@id': `${origin}/#website` },
+    author: { '@id': `${origin}/#person` },
+    publisher: { '@id': `${origin}/#person` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Chibuike Ewenike', item: `${origin}/` },
+      { '@type': 'ListItem', position: 2, name: 'Writing', item: `${origin}/#writing` },
+      { '@type': 'ListItem', position: 3, name: article.title, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base title={`${article.title}, Chibuike Ewenike`} description={article.summary} ogType="article" jsonLd={jsonLd}>
+  <Nav />
+  <main id="main" class="pt-28 pb-24 md:pt-36 md:pb-32">
+    <article class="wrap">
+      <a href="/#writing" class="inline-flex min-h-11 items-center gap-2 font-display text-[0.95rem] text-muted transition-colors hover:text-signal">
+        <Icon name="arrow" size={16} class="rotate-180" />
+        Back to writing
+      </a>
+
+      <div class="measure mt-6">
+        <p class="font-display text-[0.95rem] text-muted">
+          <time datetime={article.date}>{fmt.format(new Date(article.date))}</time>
+          <span> · {minutes} min read</span>
+        </p>
+        <h1 class="mt-4 font-display text-step-4 font-bold leading-tight" style="font-stretch: 88%">{article.title}</h1>
+        <p class="mt-5 text-step-1 leading-snug text-muted">{article.summary}</p>
+      </div>
+
+      <div class="prose measure mt-12 border-t border-line pt-10 md:mt-16">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .prose {
+    line-height: 1.7;
+  }
+  .prose :global(h2) {
+    margin: 3rem 0 0;
+    font-family: var(--font-display);
+    font-size: var(--text-step-2);
+    font-weight: 650;
+    font-stretch: 88%;
+    line-height: 1.2;
+    color: var(--color-paper);
+  }
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol),
+  .prose :global(pre) {
+    margin: 1.1rem 0 0;
+  }
+  .prose > :global(:first-child) {
+    margin-top: 0;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.4rem;
+  }
+  .prose :global(ul) {
+    list-style: disc;
+  }
+  .prose :global(ol) {
+    list-style: decimal;
+  }
+  .prose :global(li + li) {
+    margin-top: 0.45rem;
+  }
+  .prose :global(li::marker) {
+    color: var(--color-signal);
+  }
+  .prose :global(strong) {
+    font-weight: 650;
+    color: var(--color-paper);
+  }
+  .prose :global(:not(pre) > code) {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.35em;
+    border-radius: 0.3rem;
+    background: var(--color-panel);
+    color: var(--color-paper);
+    white-space: nowrap;
+  }
+  /* Shiki writes its theme background inline; the site's own panel colour wins. */
+  .prose :global(pre) {
+    overflow-x: auto;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.6rem;
+    background-color: var(--color-ink-deep) !important;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    tab-size: 4;
+  }
+  /* JetBrains Mono ligatures turn <= into ≤ and |- into ⊢, which breaks the ASCII diagrams. */
+  .prose :global(code) {
+    font-variant-ligatures: none;
+  }
+  .prose :global(pre code) {
+    font-family: inherit;
+  }
+</style>

@@ -118,10 +118,14 @@ const building = [
     color: var(--color-signal);
   }
 
-  /* Two slow light pools behind the hero. */
+  /* Two slow light pools behind the hero. The top offset is in rem, not %, so
+     the pools stay put while the web fonts swap in and the hero changes height:
+     a % offset moved the whole layer and cost 0.13 CLS on desktop. */
   .aurora {
     position: absolute;
-    inset: -20% -10% auto;
+    top: -10rem;
+    left: -10%;
+    right: -10%;
     height: 120%;
     z-index: -1;
     background:

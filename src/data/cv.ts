@@ -8,7 +8,8 @@ export const profile = {
   fullName: 'Chibuike Sopuruchukwu Ewenike',
   headline: 'Software Engineer | Backend & Full-Stack | AI Systems & AI Agents',
   location: 'Lagos, Nigeria (Remote)',
-  email: 'sopewenike@yahoo.com',
+  email: 'sopewenike@gmail.com',
+  workEmail: 'chibuikeewenike@bytealpha.online',
   phone: '+234 903 212 5576',
   phoneHref: 'tel:+2349032125576',
   cv: '/Chibuike_Ewenike_CV.pdf',
@@ -299,7 +300,10 @@ export const sideProjects: SideProject[] = [
 
 export type Article = {
   title: string;
+  /** External link, or a site path for an article hosted here. */
   url: string;
+  /** Set for articles hosted here: the body is src/content/writing/<slug>.md, served at /writing/<slug>. */
+  slug?: string;
   /** ISO date, YYYY-MM-DD. */
   date: string;
   outlet: string;
@@ -307,6 +311,15 @@ export type Article = {
 };
 
 export const articles: Article[] = [
+  {
+    title: 'Understanding Go slices: pointer, length, and capacity',
+    slug: 'go-slices-pointer-length-capacity',
+    url: '/writing/go-slices-pointer-length-capacity',
+    date: '2026-11-16',
+    outlet: 'bytealpha.online',
+    summary:
+      'Why a Go slice can be sliced past its length but not past its capacity, how moving the start shrinks capacity, and a five-step method for tracing any chain of slice expressions by hand.',
+  },
   {
     title: 'Moving production object storage off a self-hosted MinIO onto Cloudflare R2, with no downtime and no lost files',
     url: 'https://www.linkedin.com/pulse/moving-production-object-storage-off-self-hosted-minio-ewenike-wqnle',

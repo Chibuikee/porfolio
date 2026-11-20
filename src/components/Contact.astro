@@ -8,6 +8,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 
 const channels = [
   { icon: 'mail', label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { icon: 'mail', label: 'Email', value: profile.workEmail, href: `mailto:${profile.workEmail}` },
   { icon: 'phone', label: 'Phone and WhatsApp', value: profile.phone, href: profile.phoneHref },
   { icon: 'linkedin', label: 'LinkedIn', value: 'chibuike-ewenike', href: profile.links.linkedin },
 ] as const;
@@ -77,7 +78,7 @@ const channels = [
           <button type="submit" class="btn btn-primary" data-submit>
             <span data-label>Send message</span>
           </button>
-          <a href={`mailto:${profile.email}`} class="link inline-flex min-h-11 items-center font-display text-sm">or email me directly</a>
+          <a href={`mailto:${profile.workEmail}`} class="link inline-flex min-h-11 items-center font-display text-sm">or email me directly</a>
         </div>
       </form>
 

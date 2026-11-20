@@ -2,7 +2,7 @@
 
 > Software engineer (backend, full-stack, AI systems and AI agents) based in Lagos, Nigeria, working remotely. 3+ years building and running production SaaS in Python (FastAPI, Django), Go and TypeScript (React, Next.js, Node.js). Also a lawyer: called to the Nigerian Bar in July 2025.
 
-Contact: sopewenike@yahoo.com, +234 903 212 5576, https://www.linkedin.com/in/chibuike-ewenike/, https://github.com/Chibuikee
+Contact: sopewenike@gmail.com, chibuikeewenike@bytealpha.online, +234 903 212 5576, https://www.linkedin.com/in/chibuike-ewenike/, https://github.com/Chibuikee
 
 ## Case studies
 
@@ -17,6 +17,7 @@ DanceDeal Training Foundation (dancedeal.org), Dancerapy (dancerapy.org), Nuvoro
 
 ## Writing
 
+- [Understanding Go slices: pointer, length, and capacity](https://www.bytealpha.online/writing/go-slices-pointer-length-capacity) (16 Nov 2026)
 - [Moving production object storage off a self-hosted MinIO onto Cloudflare R2, with no downtime and no lost files](https://www.linkedin.com/pulse/moving-production-object-storage-off-self-hosted-minio-ewenike-wqnle) (LinkedIn, 9 Nov 2026)
 
 ## CV
