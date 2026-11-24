@@ -1,0 +1,258 @@
+---
+// A booking request leaves the site and splits in two: one branch hands off to
+// WhatsApp, the other is captured to the owner's ledger, where a passkey lock
+// opens before the record shows. Pure SMIL on one 10s clock so every piece stays
+// in step; the script pauses it off screen and, under reduced motion, shows the
+// finished picture (message delivered, record filed, lock open).
+const T = '10s';
+const fix = (n: number) => n.toFixed(4);
+// Both branches share a stem and have the same length, so one timeline fits both.
+const stem = 'M152 160 H196';
+const up = `${stem} V70 H284`;
+const down = `${stem} V250 H284`;
+const t0 = 0.08; // packets leave the card
+const t1 = 0.38; // and arrive
+const rows = [
+  { y: 222, w: 132, s: 0.52 },
+  { y: 240, w: 104, s: 0.56 },
+  { y: 258, w: 118, s: 0.6 },
+];
+---
+
+<div class="art" data-art-jp>
+  <svg viewBox="0 0 480 320" role="img" aria-labelledby="jp-art-title jp-art-desc">
+    <title id="jp-art-title">J’PRIVÉ booking request handed to WhatsApp and filed to a locked owner dashboard</title>
+    <desc id="jp-art-desc">
+      A booking card sends a request along two branches at once. One ends in a WhatsApp message to the studio. The other is
+      captured to the owner's ledger, where a passkey lock opens before the record appears.
+    </desc>
+    <defs>
+      <pattern id="jp-dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#233e5c"></circle>
+      </pattern>
+      <radialGradient id="jp-fade" cx="50%" cy="50%" r="62%">
+        <stop offset="0.5" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </radialGradient>
+      <mask id="jp-mask"><rect width="480" height="320" fill="url(#jp-fade)"></rect></mask>
+    </defs>
+    <rect width="480" height="320" fill="url(#jp-dots)" mask="url(#jp-mask)"></rect>
+
+    <!-- Tracks, with the traced path drawn over them as the request travels. -->
+    <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <path d={up} class="track"></path>
+      <path d={down} class="track"></path>
+      <g>
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.9;0.96;1" dur={T} repeatCount="indefinite" />
+        <path d={up} pathLength="100" class="trace" stroke-dasharray="100" stroke-dashoffset="0">
+          <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes={`0;${t0};${t1};1`} dur={T} repeatCount="indefinite" />
+        </path>
+        <path d={down} pathLength="100" class="trace" stroke-dasharray="100" stroke-dashoffset="0">
+          <animate attributeName="stroke-dashoffset" values="100;100;0;0" keyTimes={`0;${t0};${t1};1`} dur={T} repeatCount="indefinite" />
+        </path>
+      </g>
+    </g>
+    <circle cx="196" cy="160" r="5" class="fork"></circle>
+
+    <!-- The booking card -->
+    <rect x="24" y="96" width="128" height="128" rx="10" class="halo" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.04;0.08;0.2;1" dur={T} repeatCount="indefinite" />
+    </rect>
+    <rect x="24" y="96" width="128" height="128" rx="10" class="card"></rect>
+    <text x="40" y="122" class="card-title">Booking</text>
+    <g class="ph">
+      <rect x="40" y="138" width="96" height="6" rx="3"></rect>
+      <rect x="40" y="152" width="70" height="6" rx="3"></rect>
+      <rect x="40" y="166" width="84" height="6" rx="3"></rect>
+    </g>
+    <rect x="40" y="188" width="96" height="24" rx="12" class="btn-pill"></rect>
+    <text x="88" y="204" text-anchor="middle" class="btn-text">Request</text>
+
+    <!-- Branch one: WhatsApp -->
+    <g class="whatsapp">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.37;0.42;0.9;0.96;1" dur={T} repeatCount="indefinite" />
+      <rect x="284" y="40" width="172" height="62" rx="14" class="bubble"></rect>
+      <path d="M294 98 L286 114 L312 101 Z" class="bubble"></path>
+      <text x="300" y="64" class="bubble-title">WhatsApp</text>
+      <rect x="300" y="75" width="112" height="5" rx="2.5" class="bubble-line"></rect>
+      <rect x="300" y="86" width="76" height="5" rx="2.5" class="bubble-line"></rect>
+      <path d="M426 86 l5 5 l10 -11" class="tick" fill="none"></path>
+    </g>
+
+    <!-- Branch two: the owner's ledger, behind a passkey -->
+    <rect x="284" y="180" width="172" height="104" rx="10" class="card"></rect>
+    <text x="304" y="204" class="card-title">Owner</text>
+    <text x="436" y="204" text-anchor="end" class="muted-label">D1</text>
+    {
+      rows.map((r) => (
+        <rect x="304" y={r.y} width={r.w} height="8" rx="4" class="row">
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes={`0;${r.s};${fix(r.s + 0.04)};0.9;0.96;1`} dur={T} repeatCount="indefinite" />
+        </rect>
+      ))
+    }
+    <g class="lock">
+      <circle cx="284" cy="250" r="15" class="lock-disc"></circle>
+      <rect x="277" y="250" width="14" height="10" rx="2" class="lock-body"></rect>
+      <path d="M280 250 V246 a4 4 0 0 1 8 0 V250" class="lock-shackle" fill="none" data-shackle>
+        <animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -4;0 -4;0 0;0 0" keyTimes="0;0.4;0.46;0.9;0.96;1" dur={T} repeatCount="indefinite" />
+      </path>
+    </g>
+    <rect x="304" y="294" width="84" height="22" rx="11" class="key-pill"></rect>
+    <text x="346" y="309" text-anchor="middle" class="key-text">Passkey</text>
+
+    <!-- Packets: one request, two destinations. -->
+    {
+      [up, down].map((p) => (
+        <g class="packet" opacity="0">
+          <animateMotion path={p} dur={T} repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes={`0;${t0};${t1};1`} />
+          <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.07;0.09;0.36;0.39;1" dur={T} repeatCount="indefinite" />
+          <rect x="-8" y="-6" width="16" height="12" rx="3"></rect>
+          <path d="M-8 -6 L0 1 L8 -6" fill="none"></path>
+        </g>
+      ))
+    }
+  </svg>
+</div>
+
+<style>
+  .art svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .track {
+    stroke: var(--color-line);
+    stroke-width: 6;
+    opacity: 0.55;
+  }
+  .trace {
+    stroke: var(--color-signal);
+    stroke-width: 3.5;
+  }
+  .fork {
+    fill: var(--color-ink);
+    stroke: var(--color-line);
+    stroke-width: 2;
+  }
+  .card {
+    fill: var(--color-panel);
+    stroke: var(--color-line);
+    stroke-width: 1.25;
+  }
+  .halo {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 6px rgb(22 192 240 / 0.45));
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    fill: var(--color-paper);
+  }
+  .muted-label {
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    font-weight: 500;
+    fill: var(--color-muted);
+  }
+  .ph rect {
+    fill: var(--color-line);
+    opacity: 0.8;
+  }
+  .btn-pill {
+    fill: var(--color-brass);
+  }
+  .btn-text {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 650;
+    fill: var(--color-ink-deep);
+  }
+  .bubble {
+    fill: var(--color-signal);
+    filter: drop-shadow(0 6px 12px rgb(5 10 20 / 0.4));
+  }
+  .bubble-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 650;
+    fill: var(--color-ink-deep);
+  }
+  .bubble-line {
+    fill: var(--color-ink-deep);
+    opacity: 0.35;
+  }
+  .tick {
+    stroke: var(--color-ink-deep);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .row {
+    fill: var(--color-signal-dim);
+    opacity: 0.9;
+  }
+  .lock {
+    filter: drop-shadow(0 0 5px rgb(232 176 75 / 0.35));
+  }
+  .lock-disc {
+    fill: var(--color-ink);
+    stroke: var(--color-brass);
+    stroke-width: 2;
+  }
+  .lock-body {
+    fill: var(--color-brass);
+  }
+  .lock-shackle {
+    stroke: var(--color-brass);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .key-pill {
+    fill: none;
+    stroke: var(--color-brass);
+    stroke-width: 1.5;
+  }
+  .key-text {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--color-brass);
+  }
+  .packet rect {
+    fill: var(--color-paper);
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+  }
+  .packet path {
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+  .packet {
+    filter: drop-shadow(0 0 5px rgb(22 192 240 / 0.45));
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-art-jp]').forEach((root) => {
+    const svg = root.querySelector('svg');
+    if (!svg) return;
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Static state: message delivered, record filed, lock open, packets gone.
+      svg.querySelectorAll('animate, animateMotion, animateTransform').forEach((el) => el.remove());
+      svg.querySelector('[data-shackle]')?.setAttribute('transform', 'translate(0 -4)');
+      svg.pauseAnimations();
+      return;
+    }
+
+    // Hold the loop while the illustration is off screen.
+    new IntersectionObserver(([e]) => {
+      e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations();
+    }).observe(root);
+  });
+</script>

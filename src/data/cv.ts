@@ -29,7 +29,7 @@ export const skills: SkillGroup[] = [
   { name: 'Languages', items: ['Python', 'Go (Golang)', 'TypeScript', 'JavaScript', 'SQL', 'HTML/CSS'] },
   {
     name: 'Backend & frameworks',
-    items: ['FastAPI', 'Django', 'Node.js', 'Express', 'Go chi', 'Gin', 'React', 'Next.js', 'TanStack', 'Tailwind CSS', 'Celery', 'REST APIs', 'Server-Sent Events (SSE)', 'WebSockets'],
+    items: ['FastAPI', 'Django', 'Node.js', 'Express', 'Go chi', 'Gin', 'Hono', 'React', 'Next.js', 'Astro', 'TanStack', 'Tailwind CSS', 'Celery', 'REST APIs', 'Server-Sent Events (SSE)', 'WebSockets'],
   },
   {
     name: 'AI & data',
@@ -38,11 +38,11 @@ export const skills: SkillGroup[] = [
   { name: 'Databases & messaging', items: ['PostgreSQL (row-level security, multi-tenancy)', 'MySQL', 'MongoDB', 'Redis', 'RabbitMQ', 'Firebase'] },
   {
     name: 'Cloud & DevOps',
-    items: ['Docker', 'nginx', 'Linux', 'Oracle Cloud', 'AWS', 'Google Cloud', 'DigitalOcean', 'Cloudflare (Pages, R2, Workers, Turnstile)', 'Vercel', 'MinIO/S3', 'CI/CD', 'Backups'],
+    items: ['Docker', 'nginx', 'Linux', 'Oracle Cloud', 'AWS', 'Google Cloud', 'DigitalOcean', 'Cloudflare (Pages, Workers, D1, R2, Access, Turnstile)', 'Vercel', 'MinIO/S3', 'CI/CD', 'Backups'],
   },
   {
     name: 'Security & payments',
-    items: ['OAuth 2.0', 'JWT', 'TOTP/MFA', 'RBAC', 'Refresh-token rotation', 'CSRF protection', 'Stripe (Checkout, Billing, Connect)', 'Flutterwave'],
+    items: ['OAuth 2.0', 'JWT', 'TOTP/MFA', 'WebAuthn/passkeys', 'RBAC', 'Refresh-token rotation', 'CSRF protection', 'Stripe (Checkout, Billing, Connect)', 'Flutterwave'],
   },
   {
     name: 'Quality & observability',
@@ -128,6 +128,21 @@ export const experience: Role[] = [
     ],
     tech: ['Go', 'PostgreSQL', 'React', 'TypeScript', 'PWA', 'SSE', 'Web Push', 'Google Maps Platform', 'Docker', 'nginx', 'MinIO', 'Cloudflare Pages', 'Oracle Cloud'],
     project: 'green-rhino',
+  },
+  {
+    company: 'J’PRIVÉ',
+    title: 'Full-Stack Engineer (Contract)',
+    period: 'Nov 2026',
+    start: '2026-11',
+    context: 'Website, booking concierge, shop and owner dashboard for a luxury beauty studio in Lagos (jprive.online).',
+    bullets: [
+      'Built and launched the public site in Astro on Cloudflare Pages: treatment menus and prices, a booking concierge, a press-on nail shop, a gallery, an FAQ and structured data, with booking and checkout handed off to WhatsApp. It ranked #1 on Google for “jprive” within 8 days of launch, with 5 of the top 7 results.',
+      'Captured booking and order requests through Pages Functions into Cloudflare D1 without ever blocking the WhatsApp hand-off, with server-side re-pricing, a WAF rate limit and owner notifications.',
+      'Built an owner-only admin dashboard (inbox, clients, calendar, content editing, insights) as a separate Cloudflare Worker in Hono and Preact behind Cloudflare Access, verifying the Access JWT in code and requiring a passkey (WebAuthn) step-up for exports, erasure and publishing.',
+      'Made owner content edits publish through the GitLab API to a Git-connected Pages build, and added nightly encrypted backups to private R2 with restore drills, owner-reviewed data retention and an encrypted full export, covered by ~460 unit tests and Playwright E2E.',
+    ],
+    tech: ['TypeScript', 'Astro', 'Hono', 'Preact', 'Cloudflare Pages/Workers/D1/R2/Access', 'WebAuthn (passkeys)', 'Tailwind CSS', 'Zod', 'Vitest', 'Playwright', 'GitLab API'],
+    project: 'jprive',
   },
   {
     company: 'Dancedeal',
@@ -279,6 +294,24 @@ export const flagships: Flagship[] = [
     description:
       'Lexanalytics is an AI-powered legal research, analytics and contract automation platform. Chibuike Ewenike, a software engineer and lawyer, builds its extraction and retrieval systems.',
   },
+  {
+    slug: 'jprive',
+    exhibit: 'E',
+    name: 'J’PRIVÉ',
+    tagline: 'Luxury beauty studio site, booking concierge and owner dashboard.',
+    role: 'Full-Stack Engineer (Contract)',
+    period: 'Nov 2026',
+    url: 'https://jprive.online/',
+    urlLabel: 'jprive.online',
+    highlights: [
+      'Astro site on Cloudflare Pages, #1 on Google for “jprive” within 8 days of launch (5 of the top 7 results).',
+      'Booking and checkout hand off to WhatsApp, and each request is captured to D1 without ever blocking it.',
+      'Owner-only dashboard on a Cloudflare Worker behind Access: passkey step-up, Git publishing, nightly encrypted backups.',
+    ],
+    tags: ['Astro', 'SEO', 'Cloudflare Workers', 'D1', 'Passkeys'],
+    description:
+      'J’PRIVÉ is a luxury beauty studio in Lagos. Chibuike Ewenike built its website, WhatsApp booking concierge and shop, and an owner-only admin dashboard on Cloudflare Workers, D1 and Access with a passkey step-up.',
+  },
 ];
 
 export type SideProject = {
@@ -361,5 +394,5 @@ export const testimonials = [
   },
 ];
 
-/** Production platforms listed on the site: the four flagships plus the five others. */
+/** Production platforms listed on the site: the five flagships plus the five others. */
 export const platformCount = flagships.length + sideProjects.length;

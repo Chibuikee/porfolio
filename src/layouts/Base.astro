@@ -1,10 +1,5 @@
 ---
 import '@/styles/global.css';
-// The two faces above the fold (Latin subset only). Preloaded so they land
-// before first paint instead of swapping in and pushing the page down (CLS).
-// Vite dedupes these with the files global.css pulls in, same hashed URL.
-import displayFont from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2?url';
-import bodyFont from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
 import { profile, summary, skills, education, experience, flagships } from '@/data/cv';
 
 interface Props {
@@ -81,8 +76,6 @@ const ld = { '@context': 'https://schema.org', '@graph': [website, person, ...js
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="author" content={profile.fullName} />

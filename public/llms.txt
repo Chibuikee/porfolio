@@ -10,6 +10,7 @@ Contact: sopewenike@gmail.com, chibuikeewenike@bytealpha.online, +234 903 212 55
 - [Eureka](https://www.bytealpha.online/projects/eureka): lead full-stack engineer. AI scholarship matching: eligibility gates, dense retrieval in Qdrant (nDCG 0.918 vs 0.844 for hybrid BM25/RRF), LLM scoring into three fit tiers; FastAPI, Celery, Stripe.
 - [Green Rhino](https://www.bytealpha.online/projects/green-rhino): full-stack engineer. Trucking fleet management with live GPS tracking over SSE; Go, React PWA, Oracle Cloud.
 - [Lexanalytics](https://www.bytealpha.online/projects/lexanalytics): software engineer. AI legal research, analytics and contract automation; metadata extraction, Haystack retrieval.
+- [J’PRIVÉ](https://www.bytealpha.online/projects/jprive): full-stack engineer (contract). Luxury beauty studio site with a WhatsApp booking concierge, plus an owner-only dashboard on Cloudflare Workers, D1 and Access with passkey step-up. #1 on Google for “jprive” within 8 days of launch. Live at https://jprive.online
 
 ## Other work
 
